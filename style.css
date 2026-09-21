@@ -1,261 +1,738 @@
-/* ==========================================================================
-   TIPWONG INDUSTRIAL CO., LTD. - OFFICIAL STYLE SHEET
-   Theme: Industrial Red & White (ธีมแดง-ขาว เกรดอุตสาหกรรม)
-   ========================================================================== */
-
-/* 1. SETUP & CORE GLOBAL STYLES */
-@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;500;600;700;800&display=swap');
+/* ============================================================
+   TIPWONG LOGIN / REGISTER SYSTEM (Cleaned Version)
+   ============================================================ */
 
 :root {
-    --brand-red: #DC2626;
-    --brand-red-hover: #B91C1C;
-    --brand-red-dark: #991B1B;
-    --brand-red-light: #FEF2F2;
-    --text-dark: #1F2937;
-    --text-muted: #4B5563;
-    --bg-light: #F9FAFB;
-    --white: #FFFFFF;
-    --transition-fast: all 0.2s ease-in-out;
-    --transition-normal: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --shadow-premium: 0 10px 25px -5px rgba(220, 38, 38, 0.1), 0 8px 10px -6px rgba(220, 38, 38, 0.1);
-}
-
-html {
-    scroll-behavior: smooth;
-    text-size-adjust: 100%;
-    -webkit-tap-highlight-color: transparent;
+    --brand-red: #dc2626;
+    --brand-red-hover: #b91c1c;
 }
 
 body {
-    font-family: 'Kanit', sans-serif;
-    background-color: var(--bg-light);
-    color: var(--text-dark);
-    line-height: 1.6;
-    overflow-x: hidden;
+    font-family: 'Prompt', sans-serif;
 }
 
-/* 2. NAVIGATION & HEADER CUSTOM STYLES */
-.nav-link {
-    position: relative;
-    transition: var(--transition-fast);
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 15px;
+    background:
+        radial-gradient(circle at top right, rgba(220, 38, 38, 0.08), transparent 35%),
+        linear-gradient(135deg, #F9FAFB 0%, #FFFFFF 50%, #FEF2F2 100%);
 }
 
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: var(--brand-red);
-    transition: var(--transition-normal);
-}
-
-.nav-link:hover::after,
-.nav-link.active::after {
+.auth-container {
     width: 100%;
-}
-
-/* 3. HERO & BANNER ANIMATIONS */
-@keyframes pulse-subtle {
-    0%, 100% { opacity: 0.1; }
-    50% { opacity: 0.2; }
-}
-
-.hero-pattern {
-    animation: pulse-subtle 4s infinite ease-in-out;
-}
-
-/* 4. ONLINE SHOP & CATALOG CARD STYLES (ธีมขาว-แดง) */
-.product-grid-card {
-    background-color: var(--white);
+    max-width: 1050px;
+    min-height: 650px;
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    background: #FFFFFF;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
     border: 1px solid #E5E7EB;
-    border-radius: 0.75rem;
-    transition: var(--transition-normal);
+}
+
+/* ฝั่งซ้าย */
+.auth-brand {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 35px;
+    color: #FFFFFF;
+    background: linear-gradient(145deg, #450A0A 0%, #7F1D1D 55%, #DC2626 100%);
+    text-align: center;
     overflow: hidden;
 }
 
-.product-grid-card:hover {
-    transform: translateY(-6px);
-    border-color: var(--brand-red);
-    box-shadow: var(--shadow-premium);
-}
-
-.product-image-container {
-    background: linear-gradient(135deg, #FEF2F2 0%, #FFFFFF 100%);
-    transition: var(--transition-fast);
-}
-
-.product-grid-card:hover .product-image-container {
-    background: linear-gradient(135deg, #FEE2E2 0%, #FEF2F2 100%);
-}
-
-/* 5. TECHNICAL MATRIX TABLE STYLES (ตารางข้อมูลสเปกวิศวกรรม) */
-.tech-table-container {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    border-radius: 0.75rem;
-    overflow: hidden;
-}
-
-.tech-matrix-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-}
-
-.tech-matrix-table th {
-    background-color: var(--brand-red);
-    color: var(--white);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 1rem 1.25rem;
-    border-bottom: 3px solid var(--brand-red-dark);
-}
-
-.tech-matrix-table td {
-    padding: 1rem 1.25rem;
-    border-bottom: 1px solid #E5E7EB;
-    transition: var(--transition-fast);
-}
-
-.tech-matrix-table tr:last-child td {
-    border-bottom: none;
-}
-
-.tech-matrix-table tr:hover td {
-    background-color: var(--brand-red-light);
-    color: var(--brand-red-dark);
-}
-
-/* 6. HTML5 VIDEO ARCHITECTURE STYLES */
-.video-wrapper {
-    position: relative;
-    border: 4px solid var(--brand-red);
-    border-radius: 1rem;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -10px rgba(0, 0, 0, 0.04);
-    background-color: #000000;
-}
-
-video::-webkit-media-controls-panel {
-    background-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
-}
-
-video::-webkit-media-controls-play-button {
-    background-color: var(--brand-red);
+.auth-brand::before {
+    content: "";
+    position: absolute;
+    width: 350px;
+    height: 350px;
     border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    top: -120px;
+    right: -120px;
 }
 
-video::-webkit-media-controls-play-button:hover {
-    background-color: var(--brand-red-hover);
+.auth-brand::after {
+    content: "";
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    bottom: -100px;
+    left: -100px;
 }
 
-/* 7. SECURE FORM INPUT STYLES & INTERACTIVE STATES */
-.secure-input {
-    width: 100%;
-    padding: 0.875rem 1.25rem;
-    border: 1px solid #D1D5DB;
-    border-radius: 0.5rem;
-    background-color: var(--white);
-    transition: var(--transition-fast);
-    font-size: 0.875rem;
+.auth-logo {
+    position: relative;
+    z-index: 2;
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
 }
 
-.secure-input:focus {
-    outline: none;
-    border-color: var(--brand-red);
-    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
-    background-color: var(--white);
+.auth-brand-subtitle {
+    position: relative;
+    z-index: 2;
+    margin-top: 5px;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    opacity: 0.8;
 }
 
-/* คลาสสำหรับตรวจจับสถานะฟอร์มไม่ปลอดภัย (ใช้ร่วมกับ JS) */
-.secure-input.input-error {
-    border-color: #EF4444;
-    background-color: #FEF2F2;
+.auth-brand-icon {
+    position: relative;
+    z-index: 2;
+    width: 110px;
+    height: 110px;
+    margin: 35px 0 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.15);
 }
 
-.secure-btn {
-    background-color: var(--brand-red);
-    color: var(--white);
+.auth-brand-title {
+    position: relative;
+    z-index: 2;
+    font-size: 1.5rem;
     font-weight: 700;
-    padding: 0.875rem 1.5rem;
-    border-radius: 0.5rem;
-    transition: var(--transition-fast);
-    box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.2);
 }
 
-.secure-btn:hover {
-    background-color: var(--brand-red-hover);
-    transform: translateY(-1px);
-    box-shadow: 0 10px 15px -3px rgba(220, 38, 38, 0.3);
+.auth-brand-text {
+    position: relative;
+    z-index: 2;
+    max-width: 320px;
+    margin-top: 10px;
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.75);
 }
 
-.secure-btn:active {
-    transform: translateY(1px);
+/* ฝั่งฟอร์ม */
+.auth-form-area {
+    padding: 45px;
+    background: #FFFFFF;
+    overflow-y: auto;
 }
 
-/* 8. SAFETY NOTIFICATION & ALERTS DIALOGS */
-.alert-box {
-    padding: 1rem 1.5rem;
-    border-radius: 0.5rem;
-    margin-bottom: 1.5rem;
-    border-left: 4px solid transparent;
-    font-size: 0.875rem;
+.auth-header {
+    margin-bottom: 25px;
+}
+
+.auth-title {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #1F2937;
+}
+
+.auth-description {
+    margin-top: 5px;
+    color: #6B7280;
+    font-size: 0.85rem;
+}
+
+.auth-form {
+    display: none;
+}
+
+.auth-form.active {
+    display: block;
+}
+
+.auth-field {
+    margin-bottom: 16px;
+}
+
+.auth-input {
+    width: 100%;
+    height: 48px;
+    padding: 0 14px;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    background: #F8FAFC;
+    color: #0F172A;
+    font-family: 'Prompt', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.auth-input::placeholder {
+    color: #94A3B8;
+}
+
+.auth-input:hover {
+    border-color: #CBD5E1;
+}
+
+.auth-input:focus {
+    background: #FFFFFF;
+    border-color: #DC2626;
+    box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.08);
+}
+
+.auth-label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #475569;
+}
+
+.auth-input-wrap {
+    position: relative;
+}
+
+.auth-input-wrap .secure-input {
+    padding-right: 45px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: #6B7280;
+    cursor: pointer;
+}
+
+.password-toggle:hover {
+    color: var(--brand-red);
+}
+
+.auth-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.auth-section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 800;
+    color: #0F172A;
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #F1F5F9;
+}
+
+.auth-section-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: #FEF2F2;
+    color: #DC2626;
+    font-size: 12px;
+}
+
+.auth-main-btn {
+    width: 100%;
+    min-height: 52px;
+    padding: 0 18px;
+    border: none;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #DC2626, #B91C1C);
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Prompt', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(220, 38, 38, 0.20);
+    transition: all 0.2s ease;
+}
+
+.auth-main-btn:hover {
+    background: linear-gradient(135deg, #EF4444, #DC2626);
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(220, 38, 38, 0.25);
+}
+
+.auth-main-btn:active {
+    transform: translateY(0);
+}
+
+.auth-main-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.auth-switch {
+    margin-top: 20px;
+    text-align: center;
+    color: #6B7280;
+    font-size: 0.85rem;
+}
+
+.auth-switch button {
+    border: none;
+    background: transparent;
+    color: var(--brand-red);
+    font-family: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.auth-switch button:hover {
+    color: var(--brand-red-hover);
+    text-decoration: underline;
+}
+
+.auth-status {
+    display: none;
+    margin-bottom: 18px;
+}
+
+.auth-status.show {
+    display: block;
+}
+
+.auth-loading {
+    opacity: 0.65;
+    pointer-events: none;
+}
+
+.top-bar {
+    display: none;
+}
+
+/* Modal & Animation */
+#auth-modal {
+    animation: authOverlayIn 0.2s ease-out;
+}
+
+#auth-modal-box {
+    animation: authModalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes authOverlayIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes authModalIn {
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.page-section {
+    display: none;
+}
+
+.page-section.active {
+    display: block;
+}
+
+/* =========================================================
+   CUSTOM TOAST NOTIFICATION STYLE
+========================================================= */
+#notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.notification {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: white;
+    border-radius: 12px;
+    padding: 16px 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+    border-left: 5px solid;
+    animation: slideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    min-width: 320px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.notification.success {
+    border-left-color: #10b981;
+    background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+}
+
+.notification.error {
+    border-left-color: #ef4444;
+    background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
+}
+
+.notification.info {
+    border-left-color: #3b82f6;
+    background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%);
+}
+
+.notification-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    animation: zoomIn 0.5s ease-out;
+}
+
+.notification-content {
+    flex: 1;
+    line-height: 1.5;
+    color: #1f2937;
+}
+
+.notification-title {
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 4px;
+}
+
+.notification-message {
+    color: #6b7280;
+    font-size: 13px;
     font-weight: 500;
 }
 
-.alert-danger {
-    background-color: #FEF2F2;
-    border-left-color: #EF4444;
-    color: #991B1B;
+.notification-close {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
 }
 
-.alert-success {
-    background-color: #F0FDF4;
-    border-left-color: #22C55E;
-    color: #166534;
+.notification-close:hover {
+    color: #3f3f46;
 }
 
-/* 9. CUSTOM UTILITIES FOR INDUSTRIAL E-COMMERCE */
-.text-brand-red { color: var(--brand-red); }
-.bg-brand-red { background-color: var(--brand-red); }
-.border-brand-red { border-color: var(--brand-red); }
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
 
-.line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+@keyframes zoomIn {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* =========================================================
+   PREMIUM PROFILE IMAGE UPLOADER
+========================================================= */
+.profile-upload-card {
+    padding: 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+.profile-upload-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #dc2626;
+    background: #fef2f2;
+}
+
+.profile-drop-zone {
+    min-height: 190px;
+    border: 2px dashed #e2e8f0;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #f8fafc, #ffffff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    overflow: hidden;
+    transition: .25s ease;
+}
+
+.profile-drop-zone:hover,
+.profile-drop-zone.drag-over {
+    border-color: #ef4444;
+    background: #fff7f7;
+    transform: translateY(-1px);
+    box-shadow: 0 12px 30px rgba(220, 38, 38, 0.10);
+}
+
+.profile-upload-circle {
+    width: 62px;
+    height: 62px;
+    margin: auto;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #dc2626;
+    background: #fff;
+    border: 1px solid #fee2e2;
+    box-shadow: 0 8px 22px rgba(220, 38, 38, .10);
+    font-size: 22px;
+    transition: .25s ease;
+}
+
+.profile-drop-zone:hover .profile-upload-circle {
+    transform: translateY(-3px) scale(1.04);
+}
+
+.profile-upload-preview {
+    width: 100%;
+    height: 190px;
+}
+
+.profile-preview-image {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    border-radius: 18px;
+}
+
+/* =========================================================
+   TIPWONG DELIVERY CONFIRMATION
+========================================================= */
+.delivery-confirm-card {
+    padding: 20px;
+    border-radius: 22px;
+    background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 12px 35px rgba(15, 23, 42, .07);
+    position: relative;
     overflow: hidden;
 }
 
-/* 10. ULTRA-RESPONSIVE MEDIA QUERIES (รองรับทุกอุปกรณ์ในโรงงาน) */
-@media (max-width: 1024px) {
-    .tech-matrix-table th, 
-    .tech-matrix-table td {
-        padding: 0.75rem 1rem;
-        font-size: 0.813rem;
+.delivery-confirm-card::before {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    right: -90px;
+    top: -100px;
+    border-radius: 50%;
+    background: rgba(220, 38, 38, .06);
+    pointer-events: none;
+}
+
+.delivery-confirm-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background: linear-gradient(135deg, #ef4444, #b91c1c);
+    box-shadow: 0 8px 18px rgba(220, 38, 38, .22);
+}
+
+.delivery-check-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px;
+    border-radius: 13px;
+    background: #f8fafc;
+    border: 1px solid #edf2f7;
+}
+
+.delivery-check-icon {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #dc2626;
+    background: #fef2f2;
+    font-size: 11px;
+}
+
+.delivery-check-item p {
+    font-size: 10px;
+    font-weight: 800;
+    color: #334155;
+}
+
+.delivery-check-item span {
+    display: block;
+    font-size: 8px;
+    color: #94a3b8;
+    margin-top: 1px;
+}
+
+.delivery-submit-btn {
+    width: 100%;
+    min-height: 62px;
+    padding: 9px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    color: white;
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    box-shadow: 0 10px 25px rgba(220, 38, 38, .25);
+    transition: all .25s ease;
+    cursor: pointer;
+    border: none;
+    font-family: 'Prompt', sans-serif;
+}
+
+.delivery-submit-btn:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    box-shadow: 0 15px 30px rgba(220, 38, 38, .30);
+}
+
+.delivery-submit-btn:active {
+    transform: translateY(0);
+}
+
+.delivery-submit-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,.14);
+    border: 1px solid rgba(255,255,255,.18);
+}
+
+.delivery-arrow {
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,.15);
+    transition: .25s ease;
+}
+
+.delivery-submit-btn:hover .delivery-arrow {
+    background: white;
+    color: #dc2626;
+    transform: translateX(3px);
+}
+
+/* Responsive */
+@media (max-width: 850px) {
+    .auth-container {
+        grid-template-columns: 1fr;
+        max-width: 600px;
+    }
+    .auth-brand {
+        min-height: 300px;
+        padding: 35px 25px;
+    }
+    .auth-brand-icon {
+        width: 80px;
+        height: 80px;
+        font-size: 2.2rem;
+        margin: 20px 0;
+    }
+    .auth-form-area {
+        padding: 30px 25px;
     }
 }
 
-@media (max-width: 768px) {
-    body {
-        font-size: 0.938rem;
+@media (max-width: 640px) {
+    #notification-container {
+        right: 10px;
+        left: 10px;
+        top: 10px;
     }
-    .tech-table-container {
-        border-radius: 0;
+    .notification {
+        min-width: auto;
     }
-    .product-grid-card {
-        border-radius: 0.5rem;
+    #auth-modal-box {
+        border-radius: 20px;
+    }
+    .auth-input {
+        height: 46px;
     }
 }
 
-@media (max-width: 480px) {
-    .secure-btn {
-        width: 100%;
-        text-align: center;
+@media (max-width: 520px) {
+    .auth-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    .auth-form-area {
+        padding: 25px 18px;
+    }
+    .auth-title {
+        font-size: 1.4rem;
     }
 }
-/* ==========================================================================
-   END OF STYLESHEET - TIPWONG INDUSTRIAL SECURITY & DESIGN FRAMEWORK
-   ========================================================================== */
+
+#orderModal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 50;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    backdrop-filter: blur(4px);
+}
+
+#orderModal.show {
+    display: flex;
+}

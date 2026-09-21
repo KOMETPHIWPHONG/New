@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายละเอียดสินค้า แหวนสังกะสี - TIPWONG INDUSTRIAL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Anuphan', sans-serif;
+        }
+
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #fdfcf9;
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #e3d9bf;
+            border-radius: 10px;
+        }
+
+        .star-slider {
+            accent-color: #b49352;
+        }
+
+        .star-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #1e2d4a;
+            cursor: pointer;
+            border: 2px solid #b49352;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-[linear-gradient(135deg,#0F172A_0%,#450A0A_50%,#000000_100%)] min-h-screen p-4 md:p-8 flex items-center justify-center relative overflow-x-hidden">
+</body>
+
+<div
+    class="absolute inset-0 opacity-[0.04] pointer-events-none bg-[linear-gradient(to_right,#b49352_1px,transparent_1px),linear-gradient(to_bottom,#b49352_1px,transparent_1px)] bg-[size:32px_32px]">
+</div>
+
+<div class="fixed top-4 left-4 z-40">
+    <a href="index.html#shop"
+        class="flex items-center gap-2 bg-[#1e2d4a] hover:bg-[#2a3e63] text-[#fdfcf9] hover:text-[#b49352] border border-[#b49352]/30 px-4 py-2 rounded-xl text-xs font-bold shadow-lg transition-all duration-300 backdrop-blur-sm group">
+        <i class="fa-solid fa-house transition-transform group-hover:-translate-y-0.5"></i>
+        <span>หน้าเมนูหลัก</span>
+    </a>
+</div>
+
+<!-- Toast Notification -->
+<div id="toast-notification"
+    class="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-xl bg-white rounded-2xl shadow-xl border border-emerald-100 p-4 flex items-start gap-3 transform -translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+    <div
+        class="bg-emerald-500 text-white rounded-lg p-2 flex items-center justify-center shrink-0 w-10 h-10 text-lg shadow-sm">
+        <i class="fa-solid fa-check"></i>
+    </div>
+    <div class="flex-1 min-w-0">
+        <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1">✨ บันทึกรายการสำเร็จ!</h4>
+        <p id="toast-item-details" class="text-[11px] text-slate-500 truncate mt-0.5">
+            เพิ่มสินค้าลงรายการเรียบร้อยแล้ว</p>
+    </div>
+    <button onclick="closeToast()" class="text-slate-300 hover:text-slate-500 text-sm p-1">
+        <i class="fa-solid fa-xmark"></i>
+    </button>
+</div>
+
+<!-- Quotation Modal -->
+<div id="quotation-modal"
+    class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div
+        class="bg-white w-full max-w-md rounded-2xl shadow-2xl border border-slate-100 overflow-hidden transform scale-95 transition-transform duration-300">
+        <div class="flex items-center justify-between p-4 border-b border-slate-100">
+            <h3 class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <i class="fa-solid fa-file-invoice-dollar text-red-600"></i> รายการขอใบเสนอราคาทั้งหมด
+            </h3>
+            <button onclick="closeModal()"
+                class="w-7 h-7 bg-slate-100 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors">
+                <i class="fa-solid fa-xmark text-xs"></i>
+            </button>
+        </div>
+        <div class="p-4 bg-slate-50/50">
+            <div class="bg-white border border-slate-200/80 rounded-xl p-4 flex justify-between items-center shadow-sm">
+                <div>
+                    <h4 id="modal-product-name" class="text-xs font-bold text-slate-800">แหวนสังกะสี</h4>
+                    <p id="modal-spec" class="text-[11px] text-red-600 font-bold mt-1">สเปกขนาด: --</p>
+                </div>
+                <div class="text-right">
+                    <span id="modal-qty" class="text-xs font-bold text-slate-800 block">1 หน่วย</span>
+                    <span id="modal-price" class="text-[10px] text-slate-400 font-light">ราคา -- บาท</span>
+                </div>
+            </div>
+        </div>
+        <div class="p-4 bg-white border-t border-slate-100">
+            <a id="line-share-btn" href="https://line.me" target="_blank"
+                class="flex items-center justify-center gap-2 bg-[#06C755] text-white rounded-xl py-3 text-xs font-bold hover:brightness-105 transition-all shadow-md w-full text-center">
+                <i class="fa-brands fa-line text-base"></i> ตกลงการสั่งซื้อสินค้าผ่าน LINE
+            </a>
+        </div>
+    </div>
+</div>
+
+<main
+    class="w-full max-w-6xl bg-gradient-to-b from-[#fdfcf9] to-[#f9f6ee] rounded-[2.5rem] shadow-2xl border-2 border-[#e3d7b9] p-4 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative z-10">
+
+    <div class="lg:col-span-4 w-full lg:sticky lg:top-6 space-y-4">
+        <div
+            class="flex flex-col justify-center items-center bg-gradient-to-br from-[#f5edd6] via-[#ede3c5] to-[#dfd3b0] rounded-[2rem] p-6 border border-[#dfd2ad] aspect-square w-full relative overflow-hidden shadow-inner">
+            <span
+                class="absolute top-4 right-4 bg-[#1e2d4a] text-[#fcfbf7] text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-md">PREMIUM
+                GRADE</span>
+            <img src="image/แหวนสังกะสี.jpg" alt="แหวนสังกะสี TIPWONG INDUSTRIAL" class="w-full h-full object-cover">
+        </div>
+
+        <a href="https://line.me" target="_blank"
+            class="flex items-center justify-center gap-2 bg-[#06C755] text-white rounded-2xl py-3.5 text-xs font-bold hover:brightness-105 transition-all shadow-md w-full text-center">
+            <i class="fa-brands fa-line text-base"></i> สอบถามราคาส่งยกลังพิเศษผ่าน LINE
+        </a>
+
+        <div
+            class="bg-gradient-to-r from-[#1e2d4a] to-[#2a3e63] text-white p-4 rounded-2xl shadow-md border border-[#2e3f5e] space-y-4">
+            <div class="space-y-1">
+                <h3 class="text-xs font-bold text-[#b49352] flex items-center gap-2">
+                    <i class="fa-solid fa-screwdriver-wrench"></i> การใช้งาน (Application)
+                </h3>
+                <p class="text-xs text-slate-200 leading-relaxed font-light pl-5">
+                    แหวนสังกะสี (พร้อมแหวนยางรอง) ออกแบบมาสำหรับใช้ร่วมกับสกรูยึดหลังคาเมทัลชีท แผ่นสังกะสี
+                    หรือแผ่นหลังคาต่าง ๆ เพื่อเพิ่มประสิทธิภาพในการยึดเกาะ
+                    และช่วยป้องกันการรั่วซึมของน้ำบริเวณรูเจาะหลังคาได้อย่างดีเยี่ยม
+                </p>
+            </div>
+
+            <div class="space-y-1">
+                <h3 class="text-xs font-bold text-[#b49352] flex items-center gap-2">
+                    <i class="fa-solid fa-star"></i> จุดเด่นและคุณสมบัติ
+                </h3>
+                <ul class="list-disc pl-9 text-xs text-slate-200 leading-relaxed font-light space-y-1">
+                    <li>โครงสร้างแหวนสังกะสีคุณภาพสูง แข็งแรงทนทานต่อการใช้งาน</li>
+                    <li>มาพร้อมแหวนยางรองคุณภาพดี ช่วยซีลป้องกันน้ำรั่วซึมได้อย่างมีประสิทธิภาพ</li>
+                    <li>มีขนาดให้เลือกหลากหลายตามการใช้งาน: 16mm*4.8mm, 16mm*5.5mm, 19mm*4.8mm, 22mm*4.8mm และ
+                        25mm*4.8mm</li>
+                    <li>บรรจุมาตรฐานแพ็คละ 100 ตัว สะดวกต่อการจัดเก็บและแบ่งใช้งาน</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="lg:col-span-8 space-y-6">
+        <div class="space-y-2">
+            <div class="flex flex-wrap items-center gap-2">
+                <span
+                    class="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-gradient-to-r from-[#9e2a2a] to-[#701515] px-3.5 py-1 rounded-full shadow-sm">
+                    <i class="fa-solid fa-industry"></i> TIPWONG INDUSTRIAL
+                </span>
+                <span
+                    class="inline-flex items-center gap-1 text-xs font-bold text-emerald-800 bg-emerald-100/80 border border-emerald-300 px-2.5 py-0.5 rounded-full">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> มีสินค้าพร้อมส่ง
+                </span>
+            </div>
+
+            <h1 class="text-3xl md:text-4xl font-extrabold text-[#1e2d4a] tracking-tight leading-tight">
+                แหวนสังกะสี<br>
+                <span
+                    class="text-xl md:text-2xl font-bold bg-gradient-to-r from-[#1e2d4a] via-[#b49352] to-[#1e2d4a] bg-clip-text text-transparent">ซีลยางกันน้ำซึมเกรดพรีเมียม
+                    สำหรับงานหลังคาและสลักภัณฑ์</span>
+            </h1>
+        </div>
+
+        <!-- ตารางราคาปลีก -->
+        <div class="border border-slate-300 rounded-2xl overflow-hidden shadow-md bg-white">
+            <div
+                class="bg-gradient-to-r from-slate-800 to-slate-700 text-white px-4 py-3 text-xs font-bold flex items-center gap-2">
+                <i class="fa-solid fa-weight-scale"></i>
+                <span>ตารางราคาปลีก</span>
+            </div>
+            <div class="overflow-x-auto p-2">
+                <table class="w-full text-center border-collapse text-xs md:text-sm">
+                    <thead>
+                        <tr class="text-slate-700 bg-slate-100 font-bold">
+                            <th class="p-3 border rounded-lg">รายละเอียดสินค้า</th>
+                            <th class="p-3 border rounded-lg">บรรจุ</th>
+                            <th class="p-3 border rounded-lg">จำนวน/ลัง</th>
+                            <th class="p-3 border rounded-lg">ราคาแพ็ค</th>
+                            <th class="p-3 border rounded-lg">สถานะ</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-slate-600">
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border rounded-lg font-medium text-left">16mm x 4.8mm</td>
+                            <td class="p-3 border rounded-lg">100 ตัว</td>
+                            <td class="p-3 border rounded-lg font-medium text-slate-700">15,000 ตัว</td>
+                            <td class="p-3 border rounded-lg font-bold text-slate-800">36 บ.</td>
+                            <td class="p-3 border rounded-lg"><span
+                                    class="bg-emerald-50 text-emerald-600 px-2 py-1 rounded-md font-semibold text-[11px]">พร้อมส่ง</span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border rounded-lg font-medium text-left">16mm x 5.5mm</td>
+                            <td class="p-3 border rounded-lg">100 ตัว</td>
+                            <td class="p-3 border rounded-lg font-medium text-slate-700">15,000 ตัว</td>
+                            <td class="p-3 border rounded-lg font-bold text-slate-800">36 บ.</td>
+                            <td class="p-3 border rounded-lg"><span
+                                    class="bg-emerald-50 text-emerald-600 px-2 py-1 rounded-md font-semibold text-[11px]">พร้อมส่ง</span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border rounded-lg font-medium text-left">19mm x 4.8mm</td>
+                            <td class="p-3 border rounded-lg">100 ตัว</td>
+                            <td class="p-3 border rounded-lg font-medium text-slate-700">15,000 ตัว</td>
+                            <td class="p-3 border rounded-lg font-bold text-slate-800">40 บ.</td>
+                            <td class="p-3 border rounded-lg"><span
+                                    class="bg-emerald-50 text-emerald-600 px-2 py-1 rounded-md font-semibold text-[11px]">พร้อมส่ง</span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border rounded-lg font-medium text-left">22mm x 4.8mm</td>
+                            <td class="p-3 border rounded-lg">100 ตัว</td>
+                            <td class="p-3 border rounded-lg font-medium text-slate-700">8,000 ตัว</td>
+                            <td class="p-3 border rounded-lg font-bold text-slate-800">48 บ.</td>
+                            <td class="p-3 border rounded-lg"><span
+                                    class="bg-emerald-50 text-emerald-600 px-2 py-1 rounded-md font-semibold text-[11px]">พร้อมส่ง</span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 border rounded-lg font-medium text-left">25mm x 4.8mm</td>
+                            <td class="p-3 border rounded-lg">100 ตัว</td>
+                            <td class="p-3 border rounded-lg font-medium text-slate-700">8,000 ตัว</td>
+                            <td class="p-3 border rounded-lg font-bold text-slate-800">60 บ.</td>
+                            <td class="p-3 border rounded-lg"><span
+                                    class="bg-emerald-50 text-emerald-600 px-2 py-1 rounded-md font-semibold text-[11px]">พร้อมส่ง</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div
+            class="bg-gradient-to-b from-[#ede6d0] to-[#e4dac0] border border-[#d3c6a4] p-5 rounded-2xl space-y-4 shadow-inner">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-700 mb-1">เลือกขนาดที่ต้องการ</label>
+                    <select id="product-size-select"
+                        class="w-full bg-[#fdfcf9] border border-[#c5b896] rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-700 focus:outline-none">
+                    </select>
+                </div>
+                <div>
+                    <label id="qty-label-text" class="block text-[10px] font-bold text-slate-700 mb-1">ระบุจำนวน
+                        (ลัง)</label>
+                    <div
+                        class="flex items-center bg-[#fdfcf9] border border-[#c5b896] rounded-xl overflow-hidden h-[34px]">
+                        <button type="button" onclick="stepQty(-1)"
+                            class="px-2.5 h-full text-slate-500 hover:bg-slate-100 font-bold text-xs">-</button>
+                        <input id="product-qty-input" type="number" value="1" min="1"
+                            class="w-full h-full bg-[#fdfcf9] text-center text-xs font-bold text-slate-700 focus:outline-none">
+                        <button type="button" onclick="stepQty(1)"
+                            class="px-2.5 h-full text-slate-500 hover:bg-slate-100 font-bold text-xs">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ส่วนแสดงข้อมูลรายละเอียดเงื่อนไข: ราคาปลีก -->
+            <div id="retail-info-box"
+                class="bg-white/70 border border-[#d3c6a4] rounded-xl p-3 text-xs text-slate-700 space-y-1.5 transition-all">
+                <div class="font-bold text-[#1e2d4a] flex items-center gap-1.5">
+                    <i class="fa-solid fa-circle-info text-amber-600"></i> กำลังเลือก: ราคาปลีก (Retail Price)
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-[11px]">
+                    <div class="bg-white p-2 rounded-lg border border-slate-200">
+                        <span class="block text-slate-400 font-semibold">กลุ่มเป้าหมาย</span>
+                        <span class="font-bold text-slate-800">ลูกค้าทั่วไป, ซ่อมแซมบ้านเล็กๆ น้อยๆ</span>
+                    </div>
+                    <div class="bg-white p-2 rounded-lg border border-slate-200">
+                        <span class="block text-slate-400 font-semibold">จำนวนการซื้อ</span>
+                        <span class="font-bold text-slate-800">ซื้อปลีกตามความต้องการ</span>
+                    </div>
+                    <div class="bg-white p-2 rounded-lg border border-slate-200">
+                        <span class="block text-slate-400 font-semibold">ระดับราคา</span>
+                        <span class="font-bold text-slate-800">ราคามาตรฐานหน้าโรงงาน</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-2">
+                <button onclick="handleOrderSubmit()"
+                    style="background: linear-gradient(to right, #6b0c11, #400508, #210204);"
+                    class="w-full hover:brightness-125 text-white font-black py-4 px-2 rounded-full shadow-lg shadow-red-950/30 text-xs flex items-center justify-center gap-2 duration-100 cursor-pointer uppercase tracking-wider">
+                    <i class="fa-solid fa-cart-plus text-xs"></i>
+                    เพิ่มสินค้าลงตะกร้า & ดำเนินการต่อ
+                </button>
+            </div>
+        </div>
+
+        <script>
+            const sizeOptions = {
+                retail: [
+                    { value: "ปลีก|16mm*4.8mm|ราคาปลีก|กล่อง", text: "16mm * 4.8mm" },
+                    { value: "ปลีก|16mm*5.5mm|ราคาปลีก|กล่อง", text: "16mm * 5.5mm" },
+                    { value: "ปลีก|19mm*4.8mm|ราคาปลีก|กล่อง", text: "19mm * 4.8mm" },
+                    { value: "ปลีก|22mm*4.8mm|ราคาปลีก|กล่อง", text: "22mm * 4.8mm" },
+                    { value: "ปลีก|25mm*4.8mm|ราคาปลีก|กล่อง", text: "25mm * 4.8mm" }
+                ]
+            };
+
+            function updateDropdownOptions() {
+                const sizeSelect = document.getElementById('product-size-select');
+                const qtyLabel = document.getElementById('qty-label-text');
+
+                qtyLabel.innerText = 'ระบุจำนวน (กล่อง)';
+                sizeSelect.innerHTML = '';
+
+                sizeOptions['retail'].forEach(opt => {
+                    const el = document.createElement('option');
+                    el.value = opt.value;
+                    el.innerText = opt.text;
+                    sizeSelect.appendChild(el);
+                });
+            }
+
+            updateDropdownOptions();
+
+            function stepQty(amount) {
+                const qtyInput = document.getElementById('product-qty-input');
+                let currentVal = parseInt(qtyInput.value) || 1;
+                currentVal += amount;
+                if (currentVal < 1) currentVal = 1;
+                qtyInput.value = currentVal;
+            }
+
+            function openToast() {
+                const toast = document.getElementById('toast-notification');
+                if (toast) {
+                    toast.classList.remove('-translate-y-24', 'opacity-0', 'pointer-events-none');
+                    toast.classList.add('translate-y-0', 'opacity-100');
+                }
+            }
+
+            function closeToast() {
+                const toast = document.getElementById('toast-notification');
+                if (toast) {
+                    toast.classList.remove('translate-y-0', 'opacity-100');
+                    toast.classList.add('-translate-y-24', 'opacity-0', 'pointer-events-none');
+                }
+            }
+
+            function openModal() {
+                const modal = document.getElementById('quotation-modal');
+                if (modal) {
+                    modal.classList.remove('opacity-0', 'pointer-events-none');
+                    modal.classList.add('opacity-100');
+                }
+            }
+
+            function closeModal() {
+                const modal = document.getElementById('quotation-modal');
+                if (modal) {
+                    modal.classList.remove('opacity-100');
+                    modal.classList.add('opacity-0', 'pointer-events-none');
+                }
+            }
+
+            function handleOrderSubmit() {
+                const sizeSelect = document.getElementById('product-size-select');
+                const qtyInput = document.getElementById('product-qty-input');
+
+                const [type, sizeLabel, priceUnit, unitName] = sizeSelect.value.split('|');
+                const selectedQty = qtyInput.value;
+                const selectedPriceType = "ราคาปลีก";
+
+                const itemDetails = document.getElementById('toast-item-details');
+                const modalSpec = document.getElementById('modal-spec');
+                const modalQty = document.getElementById('modal-qty');
+                const lineShareBtn = document.getElementById('line-share-btn');
+
+                if (itemDetails) itemDetails.innerText = `สินค้า: แหวนสังกะสี ขนาด: ${sizeLabel} ราคา: ${selectedPriceType} จำนวน: ${selectedQty} ${unitName}`;
+                if (modalSpec) modalSpec.innerText = `สเปกขนาด: ${sizeLabel} • ${selectedPriceType}`;
+                if (modalQty) modalQty.innerText = `${selectedQty} ${unitName}`;
+
+                const lineMessage = encodeURIComponent(`สวัสดีครับ สนใจสินค้า แหวนสังกะสี \n- ขนาด: ${sizeLabel}\n- ประเภท: ${selectedPriceType}\n- จำนวน: ${selectedQty} ${unitName}`);
+                if (lineShareBtn) lineShareBtn.href = `https://line.me/R/msg/text/?${lineMessage}`;
+
+                openToast();
+
+                setTimeout(() => {
+                    closeToast();
+                    openModal();
+                }, 1500);
+            }
+        </script>
+</body>
+
+</html>

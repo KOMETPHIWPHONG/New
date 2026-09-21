@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายละเอียดสินค้า สกรูไดร์วอลล์ - TIPWONG INDUSTRIAL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght=300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Anuphan', sans-serif;
+        }
+
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #fdfcf9;
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #e3d9bf;
+            border-radius: 10px;
+        }
+
+        .star-slider {
+            accent-color: #b49352;
+        }
+
+        .star-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #1e2d4a;
+            cursor: pointer;
+            border: 2px solid #b49352;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-[linear-gradient(135deg,#0F172A_0%,#450A0A_50%,#000000_100%)] min-h-screen p-4 md:p-8 flex items-center justify-center relative overflow-x-hidden">
+</body>
+
+<!-- ============================================================
+    MODAL / ฟอร์มยืนยันที่อยู่การจัดส่ง (เซลล์เอกณัฐ)
+    ============================================================ -->
+    <div id="shipping-modal"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/70 backdrop-blur-md p-4 transition-all duration-300 opacity-100">
+
+        <!-- MODAL BOX (กล่องฟอร์มหลัก) -->
+        <div
+            class="bg-white rounded-3xl shadow-2xl overflow-hidden max-w-4xl w-full flex flex-col md:flex-row relative transform scale-100 border border-slate-100 transition-all duration-300">
+
+            <!-- ปุ่มปิดหน้าต่าง (กากบาทมุมขวาบน) -->
+            <button onclick="closeShippingModal()"
+                class="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-slate-100 hover:bg-red-50 text-slate-400 hover:text-red-500 flex items-center justify-center text-lg font-bold transition-all duration-200 cursor-pointer border-none"
+                aria-label="Close Modal">
+                &times;
+            </button>
+
+            <!-- ฝั่งซ้าย: แผงสีเข้มพรีเมียม (แสดงข้อมูลบริษัทและเซลล์) -->
+            <div
+                class="md:w-5/12 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white p-8 flex flex-col justify-between items-center text-center relative overflow-hidden">
+                <div
+                    class="absolute -top-12 -left-12 w-40 h-40 bg-red-600/20 rounded-full blur-3xl pointer-events-none">
+                </div>
+                <div
+                    class="absolute -bottom-12 -right-12 w-40 h-40 bg-blue-600/20 rounded-full blur-3xl pointer-events-none">
+                </div>
+
+                <div class="my-auto flex flex-col items-center relative z-10">
+                    <h3 class="text-xl font-black text-white tracking-wide">ทิพย์วงศ์ อินดัสเทรียล</h3>
+                    <div class="w-12 h-1 bg-red-600 rounded-full my-3"></div>
+                    <p class="text-xs text-slate-300 leading-relaxed max-w-xs">
+                        ผู้นำด้านการจัดจำหน่ายน็อต สกรู และฮาร์ดแวร์อุตสาหกรรมครบวงจร
+                    </p>
+                </div>
+            </div>
+
+            <!-- ฝั่งขวา: ฟอร์มกรอกที่อยู่จัดส่ง -->
+            <div class="md:w-7/12 p-8 bg-white flex flex-col justify-center">
+                <div class="mb-5 text-center md:text-left">
+                    <h2
+                        class="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2 justify-center md:justify-start">
+                        <i class="fa-solid fa-file-invoice text-red-600"></i> ยืนยันที่อยู่การจัดส่ง
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-1">ตรวจสอบข้อมูลผู้รับและเลือกรูปแบบการชำระเงิน</p>
+                </div>
+
+                <!-- FORM ELEMENT -->
+                <form id="shipping-form" onsubmit="submitShippingData(event)" class="space-y-3.5">
+
+                    <!-- ชื่อ-นามสกุล ผู้รับ -->
+                    <div>
+                        <label for="register-name" class="block text-xs font-bold text-slate-700 mb-1">
+                            ชื่อร้าน / ผู้รับ <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <i class="fa-solid fa-store absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                            <input type="text" id="register-name" name="customer_name" required autocomplete="off"
+                                placeholder="กรอกชื่อร้านหรือชื่อผู้รับ"
+                                class="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition-all">
+                        </div>
+                    </div>
+
+                    <!-- เบอร์โทรศัพท์ -->
+                    <div>
+                        <label for="register-phone" class="block text-xs font-bold text-slate-700 mb-1">
+                            เบอร์โทรศัพท์ติดต่อ <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <i class="fa-solid fa-phone absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                            <input type="text" id="register-phone" name="phone" required autocomplete="off"
+                                placeholder="กรอกเบอร์โทรศัพท์"
+                                class="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition-all">
+                        </div>
+                    </div>
+
+                    <!-- ที่อยู่จัดส่ง -->
+                    <div>
+                        <label for="register-address" class="block text-xs font-bold text-slate-700 mb-1">
+                            ที่อยู่จัดส่งโดยละเอียด <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <i class="fa-solid fa-location-dot absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                            <textarea id="register-address" name="shipping_address" rows="3" required autocomplete="off"
+                                placeholder="กรอกที่อยู่จัดส่งโดยละเอียด (บ้านเลขที่, ตำบล, อำเภอ, จังหวัด)"
+                                class="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition-all resize-none"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- เลือกรูปแบบการชำระเงิน -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">
+                            รูปแบบการชำระเงิน <span class="text-red-500">*</span>
+                        </label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <label
+                                class="flex items-center gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-100 text-xs font-medium text-slate-700">
+                                <input type="radio" name="payment_type" value="โอนชำระแล้ว (ไม่ต้องเก็บเงินปลายทาง)"
+                                    checked class="text-red-600 focus:ring-red-500">
+                                <span>โอนชำระแล้ว (ไม่ต้องเก็บเงิน)</span>
+                            </label>
+                            <label
+                                class="flex items-center gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-100 text-xs font-medium text-slate-700">
+                                <input type="radio" name="payment_type" value="เก็บเงินปลายทาง / สแกนจ่าย"
+                                    class="text-red-600 focus:ring-red-500">
+                                <span>เก็บเงินปลายทาง / สแกน</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- ปุ่มกดส่งข้อมูล -->
+                    <button type="submit" id="auth-register-btn"
+                        class="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-paper-plane"></i> บันทึกข้อมูล
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <button id="edit-shipping-button" type="button" onclick="openShippingModal(true)"
+        class="hidden fixed bottom-5 left-5 z-40 bg-slate-900 hover:bg-red-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow-lg transition cursor-pointer">
+        <i class="fa-solid fa-pen-to-square mr-1"></i> เปลี่ยนข้อมูลจัดส่ง
+    </button>
+
+    <!-- ============================================================
+    JAVASCRIPT CONTROL & CLEAN SUBMISSION
+    ============================================================ -->
+    <script>
+        function closeShippingModal() {
+            const modal = document.getElementById('shipping-modal');
+            modal.classList.add('opacity-0');
+            modal.querySelector('.bg-white').classList.add('scale-90');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                modal.classList.remove('opacity-0');
+                modal.querySelector('.bg-white').classList.remove('scale-90');
+            }, 300);
+        }
+
+        function openShippingModal() {
+            const modal = document.getElementById('shipping-modal');
+            const savedData = JSON.parse(localStorage.getItem('tipwong_shipping_data') || 'null');
+            const nameInput = document.getElementById('register-name');
+            const phoneInput = document.getElementById('register-phone');
+            const addressInput = document.getElementById('register-address');
+            if (nameInput) nameInput.value = savedData?.name || '';
+            if (phoneInput) phoneInput.value = savedData?.phone || '';
+            if (addressInput) addressInput.value = savedData?.address || '';
+            const paymentInput = document.querySelector(`input[name="payment_type"][value="${savedData?.paymentType || ''}"]`);
+            if (paymentInput) paymentInput.checked = true;
+
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('.bg-white').classList.remove('scale-90');
+            }, 10);
+        }
+
+        function submitShippingData(event) {
+            if (event) event.preventDefault();
+
+            const customerData = {
+                name: document.getElementById('register-name').value.trim(),
+                phone: document.getElementById('register-phone').value.trim(),
+                address: document.getElementById('register-address').value.trim(),
+                paymentType: document.querySelector('input[name="payment_type"]:checked').value,
+                updatedAt: new Date().toISOString()
+            };
+
+            if (!customerData.name || !customerData.phone || !customerData.address) return;
+
+            localStorage.setItem('tipwong_shipping_data', JSON.stringify(customerData));
+            localStorage.setItem('tipwong_shipping_shown', 'true');
+            document.getElementById('edit-shipping-button').classList.remove('hidden');
+            closeShippingModal();
+            showNotification('สำเร็จ', 'บันทึกข้อมูลจัดส่งเรียบร้อยแล้ว', 'success');
+        }
+
+        function initializeShippingData() {
+            const hasSavedData = Boolean(localStorage.getItem('tipwong_shipping_data'));
+            const editButton = document.getElementById('edit-shipping-button');
+            if (editButton && hasSavedData) editButton.classList.remove('hidden');
+            if (hasSavedData) closeShippingModal();
+            else openShippingModal();
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeShippingData);
+
+        // ปิด Modal เมื่อคลิกพื้นที่ว่างด้านนอก
+        document.getElementById('shipping-modal').addEventListener('mousedown', function (event) {
+            const modalBox = document.querySelector('#shipping-modal > div');
+            if (!modalBox.contains(event.target)) {
+                closeShippingModal();
+            }
+        });
+    </script>
+
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+            background:
+                radial-gradient(circle at 75% 15%, rgba(239, 68, 68, 0.08), transparent 22%),
+                radial-gradient(circle at 20% 90%, rgba(15, 23, 42, 0.08), transparent 22%),
+                linear-gradient(180deg, #f8fafc 0%, #eef2f6 100%);
+            color: #1f2937;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: radial-gradient(#d6d3d1 1px, transparent 1px);
+            background-size: 26px 26px;
+            pointer-events: none;
+            opacity: 0.22;
+            mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1), transparent 100%);
+            z-index: -1;
+        }
+
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Custom Toast Notification Style */
+        #notification-container {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: min(390px, calc(100vw - 32px));
+            pointer-events: none;
+        }
+
+        .notification {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            background: white;
+            border-radius: 16px;
+            padding: 12px 14px;
+            box-shadow: 0 14px 34px rgba(15, 23, 42, 0.16), 0 2px 6px rgba(15, 23, 42, 0.08);
+            border: 1px solid #e5e7eb;
+            border-top: 3px solid;
+            animation: slideIn 0.32s ease-out;
+            width: 100%;
+            min-height: 66px;
+            pointer-events: auto;
+        }
+
+        .notification.success {
+            border-top-color: #10b981;
+            background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 72%);
+        }
+
+        .notification.error {
+            border-top-color: #ef4444;
+            background: linear-gradient(135deg, #fef2f2 0%, #ffffff 72%);
+        }
+
+        .notification.info {
+            border-top-color: #3b82f6;
+            background: linear-gradient(135deg, #eff6ff 0%, #ffffff 72%);
+        }
+
+        .notification-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            flex-shrink: 0;
+            animation: zoomIn 0.5s ease-out;
+        }
+
+        .notification.success .notification-icon { background: #dcfce7; color: #059669; }
+        .notification.error .notification-icon { background: #fee2e2; color: #dc2626; }
+        .notification.info .notification-icon { background: #dbeafe; color: #2563eb; }
+
+        .notification-content {
+            flex: 1;
+            line-height: 1.5;
+            color: #1f2937;
+        }
+
+        .notification-title {
+            font-weight: 800;
+            color: #111827;
+            font-size: 13px;
+            margin-bottom: 2px;
+        }
+
+        .notification-message {
+            color: #6b7280;
+            font-size: 11px;
+            font-weight: 500;
+            line-height: 1.45;
+        }
+
+        .notification-close {
+            flex-shrink: 0;
+            background: none;
+            border: none;
+            color: #9ca3af;
+            cursor: pointer;
+            font-size: 19px;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+            border: 0;
+            background: transparent;
+        }
+
+        .notification-close:hover {
+            color: #3f3f46;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* =========================================================
+           PREMIUM PROFILE IMAGE UPLOADER
+        ========================================================= */
+        .profile-upload-card {
+            padding: 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 20px;
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+        }
+
+        .profile-upload-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #dc2626;
+            background: #fef2f2;
+        }
+
+        .profile-drop-zone {
+            min-height: 190px;
+            border: 2px dashed #e2e8f0;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #f8fafc, #ffffff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            overflow: hidden;
+            transition: .25s ease;
+        }
+
+        .profile-drop-zone:hover,
+        .profile-drop-zone.drag-over {
+            border-color: #ef4444;
+            background: #fff7f7;
+            transform: translateY(-1px);
+            box-shadow: 0 12px 30px rgba(220, 38, 38, 0.10);
+        }
+
+        .profile-upload-circle {
+            width: 62px;
+            height: 62px;
+            margin: auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #dc2626;
+            background: #fff;
+            border: 1px solid #fee2e2;
+            box-shadow: 0 8px 22px rgba(220, 38, 38, .10);
+            font-size: 22px;
+            transition: .25s ease;
+        }
+
+        .profile-drop-zone:hover .profile-upload-circle {
+            transform: translateY(-3px) scale(1.04);
+        }
+
+        .profile-upload-preview {
+            width: 100%;
+            height: 190px;
+        }
+
+        .profile-preview-image {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            border-radius: 18px;
+        }
+
+        /* ==============================
+           TIPWONG Premium Visual Enhancements
+           ============================== */
+        .page-section {
+            animation: pageIn 520ms ease both;
+        }
+
+        #page-shop {
+            background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 252, 0.98));
+        }
+
+        #page-shop main {
+            min-width: 0;
+        }
+
+        #page-shop .product-item {
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 26px;
+            border: 1px solid rgba(226, 232, 240, 0.92);
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+            transition: transform 320ms ease, box-shadow 320ms ease, border-color 320ms ease;
+            min-height: 410px;
+        }
+
+        #page-shop .product-item:hover {
+            transform: translateY(-8px);
+            border-color: rgba(220, 38, 38, 0.6);
+            box-shadow: 0 24px 60px rgba(220, 38, 38, 0.14), 0 8px 12px rgba(15, 23, 42, 0.06);
+        }
+
+        #page-shop .product-item img {
+            border-radius: 14px;
+            border: none;
+            box-shadow: none;
+        }
+
+        #page-shop .product-item > div:first-of-type > div:first-child {
+            background: #ffffff !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        #page-shop .product-item h3 {
+            color: #0f172a;
+            letter-spacing: -0.02em;
+            min-height: 44px;
+            font-size: 1rem;
+        }
+
+        #page-shop .product-item .product-image-wrap {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+        }
+
+        #page-shop .product-item .product-item-details {
+            background: rgba(248, 250, 252, 0.74);
+            border-top: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        #page-shop .product-item button,
+        #page-shop .product-item a {
+            font-weight: 800;
+            letter-spacing: 0.02em;
+        }
+
+        #page-shop .product-item button {
+            border: none;
+            background: linear-gradient(135deg, #111827 0%, #991b1b 100%);
+            box-shadow: 0 12px 24px rgba(127, 29, 29, 0.16);
+        }
+
+        #page-shop .product-item button:hover {
+            background: linear-gradient(135deg, #991b1b 0%, #b91c1c 100%);
+        }
+
+        #page-shop .category-item {
+            background: rgba(255, 255, 255, 0.72);
+            border-radius: 14px;
+            border: 1px solid transparent;
+        }
+
+        #page-shop .category-item:hover {
+            background: #fff7f7;
+            color: #991b1b !important;
+            border-color: rgba(220, 38, 38, 0.4);
+        }
+
+        #page-shop aside {
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 28px;
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+        }
+
+        #page-shop .product-item[data-category="screw-metal"] .absolute.top-3.right-3 {
+            background: linear-gradient(135deg, #991b1b, #dc2626);
+        }
+
+        #page-home .hero-shadow {
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+        }
+
+        @keyframes pageIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 640px) {
+
+            #notification-container {
+                right: 10px;
+                left: 10px;
+                top: 10px;
+            }
+
+            .notification {
+                min-width: auto;
+            }
+        }
+    </style>
+
+    <script>
+        // โหลดข้อมูลสมาชิกจากเครื่อง
+        let currentUser = JSON.parse(localStorage.getItem('tipwong_current_user')) || null;
+
+        // ระบบ Toast Notification
+        function showNotification(title, message, type = 'success') {
+            let container = document.getElementById('notification-container');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'notification-container';
+                document.body.appendChild(container);
+            }
+
+            const notif = document.createElement('div');
+            notif.className = `notification ${type}`;
+            notif.innerHTML = `
+                <div class="notification-icon">
+                    <i class="fa-solid ${type === 'success' ? 'fa-circle-check text-emerald-500' : type === 'error' ? 'fa-circle-exclamation text-red-500' : 'fa-circle-info text-blue-500'}"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">${title}</div>
+                    <div class="notification-message">${message}</div>
+                </div>
+                <button class="notification-close" onclick="this.parentElement.remove()">&times;</button>
+            `;
+            container.appendChild(notif);
+            setTimeout(() => {
+                notif.style.opacity = '0';
+                setTimeout(() => notif.remove(), 300);
+            }, 4000);
+        }
+
+        // ฟังก์ชันสลับระหว่าง เข้าสู่ระบบ <-> ยืนยันที่อยู่การจัดส่ง
+        function toggleAuthMode() {
+            const loginForm = document.getElementById('auth-login-form');
+            const registerForm = document.getElementById('auth-register-form');
+            const modalTitle = document.getElementById('auth-modal-title');
+            const modalDesc = document.getElementById('auth-modal-description');
+
+            if (loginForm.classList.contains('hidden')) {
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+                modalTitle.innerText = "เข้าสู่ระบบ";
+                modalDesc.innerText = "เข้าสู่ระบบ TIPWONG เพื่อจัดการข้อมูลลูกค้าและที่อยู่จัดส่ง";
+            } else {
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+                modalTitle.innerText = "ยืนยันที่อยู่การจัดส่ง";
+                modalDesc.innerText = "กรอกข้อมูลรายละเอียดและที่อยู่จัดส่งสินค้าของคุณ";
+            }
+        }
+
+        // ฟังก์ชันเปิด/ปิด การมองเห็นรหัสผ่าน
+        function toggleAuthPassword() {
+            const passwordInput = document.getElementById('auth-password');
+            const passwordIcon = document.getElementById('auth-password-icon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordIcon.classList.remove('fa-eye');
+                passwordIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                passwordIcon.classList.remove('fa-eye-slash');
+                passwordIcon.classList.add('fa-eye');
+            }
+        }
+
+        // ฟังก์ชันจัดการปุ่มกดเข้าสู่ระบบ / ยืนยันที่อยู่การจัดส่งจริง
+        function handleAuthSubmit(actionType) {
+            if (actionType === 'login') {
+                // อยู่หน้าเข้าสู่ระบบ
+                const emailInput = document.getElementById('auth-email').value.trim();
+                const passwordInput = document.getElementById('auth-password').value.trim();
+
+                if (!emailInput || !passwordInput) {
+                    showNotification("แจ้งเตือน", "กรุณากรอกอีเมลและรหัสผ่านให้ครบถ้วน", "error");
+                    return;
+                }
+
+                // เงื่อนไขพนักงานบริษัท
+                if (emailInput.endsWith('@tipwong.com') || passwordInput === 'tipwong2026') {
+                    currentUser = {
+                        name: emailInput.split('@')[0],
+                        email: emailInput,
+                        role: "พนักงานบริษัท (Authorized Staff)",
+                        profileImage: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150"
+                    };
+
+                    localStorage.setItem('tipwong_current_user', JSON.stringify(currentUser));
+                    showNotification("สำเร็จ!", "เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับสมาชิกบริษัท", "success");
+
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
+                } else {
+                    showNotification("แจ้งเตือน", "ขออภัย! ระบบนี้สำหรับพนักงานของบริษัท Tipwong เท่านั้น", "error");
+                }
+            } else {
+                // อยู่หน้ายืนยันที่อยู่การจัดส่ง
+                const name = document.getElementById('register-name').value;
+                const phone = document.getElementById('register-phone').value;
+                const email = document.getElementById('register-email').value;
+                const address = document.getElementById('register-address').value;
+                const district = document.getElementById('register-district').value;
+                const province = document.getElementById('register-province').value;
+                const postcode = document.getElementById('register-postcode').value;
+
+                if (!name || !phone || !address || !district || !province || !postcode) {
+                    showNotification("แจ้งเตือน", "กรุณากรอกข้อมูลที่อยู่จัดส่งให้ครบถ้วน", "error");
+                    return;
+                }
+
+                // อ่านรูปโปรไฟล์แล้วบันทึกข้อมูลสมาชิกไว้ใน localStorage
+                readProfileImageAsDataURL(selectedProfileImage).then((profileImage) => {
+                    currentUser = {
+                        name,
+                        phone,
+                        email,
+                        address,
+                        district,
+                        province,
+                        postcode,
+                        profileImage: profileImage || "",
+                        role: "ลูกค้า",
+                        createdAt: new Date().toISOString()
+                    };
+
+                    localStorage.setItem('tipwong_current_user', JSON.stringify(currentUser));
+
+                    showNotification(
+                        "สำเร็จ!",
+                        profileImage
+                            ? "บันทึกข้อมูลและรูปโปรไฟล์เรียบร้อยแล้ว!"
+                            : "บันทึกข้อมูลลูกค้าเรียบร้อยแล้ว!",
+                        "success"
+                    );
+
+                    setTimeout(() => {
+                        removeProfileImage();
+                        toggleAuthMode();
+                    }, 1200);
+                }).catch((error) => {
+                    console.error(error);
+                    showNotification("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกรูปโปรไฟล์ได้", "error");
+                });
+            }
+        }
+
+        // =========================================================
+        // ระบบรูปโปรไฟล์: Preview / Drag & Drop / Validation
+        // =========================================================
+        let selectedProfileImage = null;
+
+        function handleProfileDrop(event) {
+            event.preventDefault();
+            const zone = document.getElementById('profile-drop-zone');
+            zone.classList.remove('drag-over');
+
+            const file = event.dataTransfer.files?.[0];
+            if (file) handleProfileImage(file);
+        }
+
+        function handleProfileImage(file) {
+            if (!file) return;
+
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+            const maxSize = 5 * 1024 * 1024;
+
+            if (!allowedTypes.includes(file.type)) {
+                showNotification("รูปภาพไม่ถูกต้อง", "กรุณาเลือก JPG, PNG หรือ WEBP", "error");
+                return;
+            }
+
+            if (file.size > maxSize) {
+                showNotification("ไฟล์ใหญ่เกินไป", "รูปโปรไฟล์ต้องมีขนาดไม่เกิน 5MB", "error");
+                return;
+            }
+
+            selectedProfileImage = file;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('profile-preview-image').src = e.target.result;
+                document.getElementById('profile-upload-empty').classList.add('hidden');
+                document.getElementById('profile-upload-preview').classList.remove('hidden');
+                document.getElementById('profile-image-info').classList.remove('hidden');
+                document.getElementById('profile-image-name').textContent = file.name;
+
+                showNotification("เลือกรูปสำเร็จ", "รูปโปรไฟล์พร้อมใช้งานแล้ว", "success");
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeProfileImage(event) {
+            if (event) event.stopPropagation();
+
+            selectedProfileImage = null;
+            document.getElementById('profile-image-input').value = '';
+            document.getElementById('profile-preview-image').src = '';
+            document.getElementById('profile-upload-empty').classList.remove('hidden');
+            document.getElementById('profile-upload-preview').classList.add('hidden');
+            document.getElementById('profile-image-info').classList.add('hidden');
+            document.getElementById('profile-image-name').textContent = '';
+        }
+
+        function readProfileImageAsDataURL(file) {
+            return new Promise((resolve, reject) => {
+                if (!file) {
+                    resolve("");
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = () => reject(new Error("อ่านไฟล์รูปภาพไม่สำเร็จ"));
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // ฟังก์ชันลืมรหัสผ่าน
+        function resetAuthPassword() {
+            showNotification("ข้อมูลระบบ", "กรุณาติดต่อเจ้าหน้าที่เพื่อรีเซ็ตรหัสผ่าน", "info");
+        }
+    </script>
+
+    <div
+        class="absolute inset-0 opacity-[0.04] pointer-events-none bg-[linear-gradient(to_right,#b49352_1px,transparent_1px),linear-gradient(to_bottom,#b49352_1px,transparent_1px)] bg-[size:32px_32px]">
+    </div>
+
+    <div class="fixed top-4 left-4 z-40">
+        <a href="index.html#shop"
+            class="flex items-center gap-2 bg-[#1e2d4a] hover:bg-[#2a3e63] text-[#fdfcf9] hover:text-[#b49352] border border-[#b49352]/30 px-4 py-2 rounded-xl text-xs font-bold shadow-lg transition-all duration-300 backdrop-blur-sm group">
+            <i class="fa-solid fa-house transition-transform group-hover:-translate-y-0.5"></i>
+            <span>หน้าเมนูหลัก</span>
+        </a>
+    </div>
+
+    <div id="toast-notification"
+        class="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-xl bg-white rounded-2xl shadow-xl border border-emerald-100 p-4 flex items-start gap-3 transform -translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <div
+            class="bg-emerald-500 text-white rounded-lg p-2 flex items-center justify-center shrink-0 w-10 h-10 text-lg shadow-sm">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1">✨ บันทึกรายการสำเร็จ!</h4>
+            <p id="toast-item-details" class="text-[11px] text-slate-500 truncate mt-0.5">
+                เพิ่มสินค้าลงรายการเรียบร้อยแล้ว</p>
+        </div>
+        <button onclick="closeToast()" class="text-slate-300 hover:text-slate-500 text-sm p-1">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <div id="toast-review-notification"
+        class="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-md bg-[#1e2d4a] text-white rounded-2xl shadow-2xl border border-[#b49352]/40 p-4 flex items-center gap-3 transform -translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <div
+            class="bg-[#8c6f34] text-white rounded-xl p-2 flex items-center justify-center shrink-0 w-10 h-10 text-base shadow-md">
+            <i class="fa-solid fa-paper-plane"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+            <h4 class="text-xs font-bold text-[#b49352] flex items-center gap-1">✨ ส่งความคิดเห็นสำเร็จ!</h4>
+            <p class="text-[11px] text-slate-300 mt-0.5">ขอบคุณสำหรับรีวิวและข้อมูลของคุณครับ</p>
+        </div>
+        <button onclick="closeReviewToast()" class="text-slate-400 hover:text-white text-sm p-1">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <div id="quotation-modal"
+        class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div
+            class="bg-white w-full max-w-md rounded-2xl shadow-2xl border border-slate-100 overflow-hidden transform scale-95 transition-transform duration-300">
+            <div class="flex items-center justify-between p-4 border-b border-slate-100">
+                <h3 class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                    <i class="fa-solid fa-file-invoice-dollar text-red-600"></i> รายการขอใบเสนอราคาทั้งหมด
+                </h3>
+                <button onclick="closeModal()"
+                    class="w-7 h-7 bg-slate-100 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors">
+                    <i class="fa-solid fa-xmark text-xs"></i>
+                </button>
+            </div>
+            <div class="p-4 bg-slate-50/50">
+                <div
+                    class="bg-white border border-slate-200/80 rounded-xl p-4 flex justify-between items-center shadow-sm">
+                    <div>
+                        <h4 id="modal-product-name" class="text-xs font-bold text-slate-800">ชุบดาโก้ ปลายสว่านรองแหวน
+                        </h4>
+                        <p id="modal-spec" class="text-[11px] text-red-600 font-bold mt-1">สเปกขนาด: --</p>
+                    </div>
+                    <div class="text-right">
+                        <span id="modal-qty" class="text-xs font-bold text-slate-800 block">1 หน่วย</span>
+                        <span id="modal-price" class="text-[10px] text-slate-400 font-light">ราคา -- บาท</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-white border-t border-slate-100">
+                <a id="line-share-btn" href="https://line.me" target="_blank"
+                    class="flex items-center justify-center gap-2 bg-[#06C755] text-white rounded-xl py-3 text-xs font-bold hover:brightness-105 transition-all shadow-md w-full text-center">
+                    <i class="fa-brands fa-line text-base"></i> ตกลงการสั่งซื้อสินค้าผ่าน LINE
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <main
+        class="w-full max-w-6xl bg-gradient-to-b from-[#fdfcf9] to-[#f9f6ee] rounded-[2.5rem] shadow-2xl border-2 border-[#e3d7b9] p-4 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative z-10">
+
+        <div class="lg:col-span-4 w-full lg:sticky lg:top-6 space-y-4">
+            <div
+                class="flex flex-col justify-center items-center bg-gradient-to-br from-[#f5edd6] via-[#ede3c5] to-[#dfd3b0] rounded-[2rem] p-6 border border-[#dfd2ad] aspect-square w-full relative overflow-hidden shadow-inner">
+                <span
+                    class="absolute top-4 right-4 bg-[#1e2d4a] text-[#fcfbf7] text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-md">PREMIUM
+                    GRADE</span>
+                <!-- ปรับชื่อไฟล์รูปภาพให้ตรงกับงานของคุณ -->
+                <img src="image/สกรูเมทัลชีท ชุบดาโก้ ปลายสว่านรองแหวน.jpg"
+                    alt="ชุบดาโก้ ปลายสว่านรองยาง TIPWONG INDUSTRIAL" class="w-full h-full object-cover">
+            </div>
+
+            <a href="https://line.me" target="_blank"
+                class="flex items-center justify-center gap-2 bg-[#06C755] text-white rounded-2xl py-3.5 text-xs font-bold hover:brightness-105 transition-all shadow-md w-full text-center">
+                <i class="fa-brands fa-line text-base"></i> สอบถามราคาส่งยกลังพิเศษผ่าน LINE
+            </a>
+            <div class="max-w-xl mx-auto space-y-4">
+                <!-- กล่องดีไซน์ตามตัวอย่าง -->
+                <div class="bg-[#1e293b] text-slate-200 p-6 rounded-3xl shadow-xl space-y-6">
+
+                    <!-- หัวข้อ การใช้งาน -->
+                    <div class="space-y-2">
+                        <strong class="text-[#b49352] flex items-center gap-2 text-base font-bold">
+                            <i class="fa-solid fa-screwdriver-wrench"></i> การใช้งาน (Application)
+                        </strong>
+                        <p class="leading-relaxed pl-6 text-slate-300 text-sm">
+                            สกรูเมทัลชีท ชุบดาโก้ ปลายแหลม รองยางดำ EPDM ออกแบบมาสำหรับงานยึดหลังคาเมทัลชีท แผ่นสังกะสี
+                            หรือแผ่นหลังคาต่าง ๆ เข้ากับโครงสร้างไม้หรือเหล็กบาง ปลายแหลมคมเจาะยึดได้แน่นหนา
+                            มาพร้อมแหวนรองยางดำ EPDM ช่วยป้องกันน้ำรั่วซึมตลอดอายุการใช้งาน
+                        </p>
+                    </div>
+
+                    <!-- หัวข้อ จุดเด่นและคุณสมบัติ -->
+                    <div class="space-y-2">
+                        <strong class="text-[#b49352] flex items-center gap-2 text-base font-bold">
+                            <i class="fa-solid fa-star"></i> จุดเด่นและคุณสมบัติ
+                        </strong>
+                        <ul class="list-disc pl-11 text-slate-300 text-sm space-y-1.5">
+                            <li>ชุบผิวด้วยเทคโนโลยีดาโก้ (Dacromet) ทนสนิมและการกัดกร่อนสูงพิเศษ</li>
+                            <li>ระบบซีลยางดำ EPDM ทนความร้อน ป้องกันการรั่วซึมของน้ำได้ 100%</li>
+                            <li>ปลายแหลมคม เจาะยึดได้รวดเร็ว ไม่เลื่อนไถลขณะใช้งาน</li>
+                            <li>บรรจุภัณฑ์ได้มาตรฐาน สะดวกต่อการจัดเก็บและแบ่งใช้งาน</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-8 space-y-6">
+            <div class="space-y-4">
+                <div class="flex flex-wrap items-center gap-2">
+                    <span
+                        class="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-gradient-to-r from-[#9e2a2a] to-[#701515] px-3.5 py-1 rounded-full shadow-sm">
+                        <i class="fa-solid fa-industry"></i> TIPWONG INDUSTRIAL
+                    </span>
+                    <span
+                        class="inline-flex items-center gap-1 text-xs font-bold text-emerald-800 bg-emerald-100/80 border border-emerald-300 px-2.5 py-0.5 rounded-full">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> มีสินค้าพร้อมส่ง
+                    </span>
+                </div>
+
+                <h1 class="text-3xl md:text-4xl font-extrabold text-[#1e2d4a] tracking-tight leading-tight">
+                    สกรูเมทัลชีท ชุบดาโก้ ปลายสว่านรองแหวน <br>
+                    <span
+                        class="text-xl md:text-2xl font-bold bg-gradient-to-r from-[#1e3a8a] via-[#3b82f6] to-[#1e3a8a] bg-clip-text text-transparent">คุณภาพสูง
+                        ทนทานต่อสนิม พร้อมแหวนยางกันน้ำ สำหรับติดตั้งหลังคาเมทัลชีท</span>
+                </h1>
+
+                <div class="border border-blue-200 rounded-2xl overflow-hidden shadow-md bg-white mb-6">
+                    <div
+                        class="bg-gradient-to-r from-blue-900 to-blue-700 text-white px-4 py-3 text-xs font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span>ตารางราคาปลีก (ต่อ 100 ตัว)</span>
+                    </div>
+                    <div class="overflow-x-auto p-2">
+                        <table class="w-full text-center border-separate border-spacing-1 text-[10px] md:text-xs">
+                            <thead>
+                                <tr class="text-blue-800 bg-blue-50 font-bold">
+                                    <th class="p-2 border border-blue-100 rounded-lg">รายละเอียด</th>
+                                    <th class="p-2 border border-blue-100 rounded-lg">ราคา</th>
+                                    <th class="p-2 border border-blue-100 rounded-lg">บรรจุ/ลัง</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-slate-600">
+                                <tr>
+                                <td class="p-2 border rounded-lg">#10x5/8" (16 mm)</td>
+                                <td class="p-2 border rounded-lg">104 บ.</td>
+                                <td class="p-2 border rounded-lg">100 ตัว</td>
+                                </tr>
+                                <tr>
+                                <td class="p-2 border rounded-lg">#10x3/4" (19 mm)</td>
+                                <td class="p-2 border rounded-lg">112 บ.</td>
+                                <td class="p-2 border rounded-lg">100 ตัว</td>
+                                </tr>
+                                <tr>
+                                <td class="p-2 border rounded-lg">#12x1" (25 mm)</td>
+                                <td class="p-2 border rounded-lg">136 บ.</td>
+                                <td class="p-2 border rounded-lg">100 ตัว</td>
+                                </tr>
+                                <tr>
+                                <td class="p-2 border rounded-lg">#12x1-1/2" (38 mm)</td>
+                                <td class="p-2 border rounded-lg">158 บ.</td>
+                                <td class="p-2 border rounded-lg">100 ตัว</td>
+                                </tr>
+                                <tr>
+                                <td class="p-2 border rounded-lg">#10x2" (50 mm)</td>
+                                <td class="p-2 border rounded-lg">150 บ.</td>
+                                <td class="p-2 border rounded-lg">100 ตัว</td>
+                                </tr>
+                                <tr>
+                                <td class="p-2 border rounded-lg">#12x2" (50 mm)</td>
+                                <td class="p-2 border rounded-lg">176 บ.</td>
+                                <td class="p-2 border rounded-lg">100 ตัว</td>
+                                </tr>
+                                <tr>
+                                <td class="p-2 border rounded-lg">#12x2-1/2" (65 mm)</td>
+                                <td class="p-2 border rounded-lg">196 บ.</td>
+                                <td class="p-2 border rounded-lg">100 ตัว</td>
+                                </tr>
+                                <tr>
+                                <td class="p-2 border rounded-lg">#12x3" (75 mm)</td>
+                                <td class="p-2 border rounded-lg">240 บ.</td>
+                                <td class="p-2 border rounded-lg">100 ตัว</td>
+                                </tr>
+                                <tr>
+                                <td class="p-2 border rounded-lg">#12x3-1/2" (90 mm)</td>
+                                <td class="p-2 border rounded-lg">294 บ.</td>
+                                <td class="p-2 border rounded-lg">100 ตัว</td>
+                                </tr>
+                                <tr>
+                                <td class="p-2 border rounded-lg">#12x4" (100 mm)</td>
+                                <td class="p-2 border rounded-lg">324 บ.</td>
+                                <td class="p-2 border rounded-lg">100 ตัว</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div
+                    class="bg-gradient-to-b from-[#ede6d0] to-[#e4dac0] border border-[#d3c6a4] p-5 rounded-2xl space-y-4 shadow-inner">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-700 mb-1">เลือกขนาดที่ต้องการ</label>
+                            <select id="product-size-select"
+                                class="w-full bg-[#fdfcf9] border border-[#c5b896] rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-700 focus:outline-none">
+                            </select>
+                        </div>
+                        <div>
+                            <label id="qty-label-text" class="block text-[10px] font-bold text-slate-700 mb-1">ระบุจำนวน
+                                (กล่อง)</label>
+                            <div
+                                class="flex items-center bg-[#fdfcf9] border border-[#c5b896] rounded-xl overflow-hidden h-[34px]">
+                                <button type="button" onclick="stepQty(-1)"
+                                    class="px-2.5 h-full text-slate-500 hover:bg-slate-100 font-bold text-xs">-</button>
+                                <input id="product-qty-input" type="number" value="1" min="1"
+                                    class="w-full h-full bg-[#fdfcf9] text-center text-xs font-bold text-slate-700 focus:outline-none">
+                                <button type="button" onclick="stepQty(1)"
+                                    class="px-2.5 h-full text-slate-500 hover:bg-slate-100 font-bold text-xs">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="handleOrderSubmit()"
+                        class="w-full bg-gradient-to-r from-red-700 via-red-600 to-red-700 hover:brightness-105 text-white font-black py-3.5 rounded-full shadow-md text-xs uppercase tracking-wider transition-all">
+                        <i class="fa-solid fa-cart-plus mr-1"></i> เพิ่มสินค้าลงตะกร้า & ดำเนินการต่อ
+                    </button>
+                </div>
+
+                <div id="quotation-modal"
+                    class="fixed inset-0 bg-black/50 flex items-center justify-center opacity-0 pointer-events-none transition-all z-50">
+                    <div class="bg-white rounded-2xl p-6 w-[90%] max-w-sm shadow-xl transform scale-95 transition-all">
+                        <h3 class="font-bold text-lg mb-4 text-slate-800 border-b pb-2">รายการขอใบเสนอราคา</h3>
+
+                        <div class="bg-slate-50 p-4 rounded-xl mb-6 space-y-1 border border-slate-100">
+                            <p id="modal-product-name" class="font-bold text-sm text-blue-900"></p>
+                            <p id="modal-spec" class="text-xs text-slate-600"></p>
+                            <p id="modal-qty" class="text-xs text-red-600 font-bold"></p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <button onclick="closeModal()"
+                                class="py-2 rounded-lg bg-gray-100 text-gray-700 font-bold text-sm">ปิด</button>
+                            <a id="line-share-btn" href="#" target="_blank"
+                                class="py-2 rounded-lg bg-green-600 text-white font-bold text-sm text-center">สั่งซื้อผ่าน
+                                LINE</a>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    const sizeOptions = [
+                        { value: "|#10x5/8\" (16 mm)", text: "#10x5/8\" (16 mm)" },
+                        { value: "|#10x3/4\" (19 mm)", text: "#10x3/4\" (19 mm)" },
+                        { value: "|#12x1\" (25 mm)", text: "#12x1\" (25 mm)" },
+                        { value: "|#12x1-1/2\" (38 mm)", text: "#12x1-1/2\" (38 mm)" },
+                        { value: "|#10x2\" (50 mm)", text: "#10x2\" (50 mm)" },
+                        { value: "|#12x2\" (50 mm)", text: "#12x2\" (50 mm)" },
+                        { value: "|#12x2-1/2\" (65 mm)", text: "#12x2-1/2\" (65 mm)" },
+                        { value: "|#12x3\" (75 mm)", text: "#12x3\" (75 mm)" },
+                        { value: "|#12x3-1/2\" (90 mm)", text: "#12x3-1/2\" (90 mm)" },
+                        { value: "|#12x4\" (100 mm)", text: "#12x4\" (100 mm)" }
+                    ];
+
+                    function initDropdownOptions() {
+                        const sizeSelect = document.getElementById('product-size-select');
+                        sizeSelect.innerHTML = '';
+                        sizeOptions.forEach(opt => {
+                            const el = document.createElement('option');
+                            el.value = opt.value;
+                            el.innerText = opt.text;
+                            sizeSelect.appendChild(el);
+                        });
+                    }
+
+                    initDropdownOptions();
+
+                    function stepQty(amount) {
+                        const qtyInput = document.getElementById('product-qty-input');
+                        let currentVal = parseInt(qtyInput.value) || 1;
+                        currentVal += amount;
+                        if (currentVal < 1) currentVal = 1;
+                        qtyInput.value = currentVal;
+                    }
+
+                    function handleOrderSubmit() {
+                        const sizeSelect = document.getElementById('product-size-select');
+                        const qtyInput = document.getElementById('product-qty-input');
+
+                        const [type, sizeLabel, priceUnit, unitName] = sizeSelect.value.split('|');
+                        const selectedQty = qtyInput.value;
+                        const selectedPriceType = "ราคาปลีก";
+
+                        document.getElementById('toast-item-details').innerText = `สินค้า: ชุบดาโก้ ปลายสว่านรองยาง ขนาด: ${sizeLabel} ราคา: ${selectedPriceType} จำนวน: ${selectedQty} กล่อง`;
+                        document.getElementById('modal-spec').innerText = `สเปกขนาด: ${sizeLabel} • ${selectedPriceType}`;
+                        document.getElementById('modal-qty').innerText = `${selectedQty} กล่อง`;
+
+                        const toast = document.getElementById('toast-notification');
+                        toast.classList.remove('-translate-y-24', 'opacity-0', 'pointer-events-none');
+
+                        const lineMessage = encodeURIComponent(`สวัสดีครับ ชุบดาโก้ ปลายสว่านรองยาง \n- ขนาด: ${sizeLabel}\n- ประเภท: ${selectedPriceType}\n- จำนวน: ${selectedQty} กล่อง`);
+                        document.getElementById('line-share-btn').href = `https://line.me/R/msg/text/?${lineMessage}`;
+
+                        setTimeout(() => {
+                            closeToast();
+                            openModal();
+                        }, 1500);
+                    }
+
+                    function closeToast() {
+                        const toast = document.getElementById('toast-notification');
+                        toast.classList.add('-translate-y-24', 'opacity-0', 'pointer-events-none');
+                    }
+
+                    function openModal() {
+                        const modal = document.getElementById('quotation-modal');
+                        modal.classList.remove('opacity-0', 'pointer-events-none');
+                        modal.querySelector('div').classList.remove('scale-95');
+                    }
+
+                    function closeModal() {
+                        const modal = document.getElementById('quotation-modal');
+                        modal.classList.add('opacity-0', 'pointer-events-none');
+                        modal.querySelector('div').classList.add('scale-95');
+                    }
+
+                    function openReviewToast() {
+                        closeToast();
+
+                        const rToast = document.getElementById('toast-review-notification');
+                        rToast.classList.remove('-translate-y-24', 'opacity-0', 'pointer-events-none');
+                        rToast.classList.add('translate-y-0', 'opacity-100');
+
+                        setTimeout(() => {
+                            closeReviewToast();
+                        }, 3500);
+                    }
+
+                    function closeReviewToast() {
+                        const rToast = document.getElementById('toast-review-notification');
+                        rToast.classList.remove('translate-y-0', 'opacity-100');
+                        rToast.classList.add('-translate-y-24', 'opacity-0', 'pointer-events-none');
+                    }
+
+                    const ratingSlider = document.getElementById('rating-slider');
+                    const ratingValue = document.getElementById('rating-value');
+                    const starDisplay = document.getElementById('star-display');
+                    const commentForm = document.getElementById('comment-form');
+                    const reviewContainer = document.getElementById('review-container');
+
+                    ratingSlider.addEventListener('input', (e) => {
+                        const val = parseFloat(e.target.value).toFixed(1);
+                        ratingValue.textContent = val;
+                        let starsHTML = '';
+                        for (let i = 1; i <= 5; i++) {
+                            if (val >= i) {
+                                starsHTML += '<i class="fa-solid fa-star"></i>';
+                            } else if (val >= i - 0.5) {
+                                starsHTML += '<i class="fa-solid fa-star-half-stroke"></i>';
+                            } else {
+                                starsHTML += '<i class="fa-regular fa-star opacity-40"></i>';
+                            }
+                        }
+                        starDisplay.innerHTML = starsHTML;
+                    });
+
+                    commentForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        const name = document.getElementById('reviewer-name').value;
+                        const text = document.getElementById('reviewer-text').value;
+                        const rating = parseFloat(ratingSlider.value).toFixed(1);
+
+                        let commentStars = '';
+                        for (let i = 1; i <= 5; i++) {
+                            if (rating >= i) {
+                                commentStars += '<i class="fa-solid fa-star"></i>';
+                            } else if (rating >= i - 0.5) {
+                                commentStars += '<i class="fa-solid fa-star-half-stroke"></i>';
+                            } else {
+                                commentStars += '<i class="fa-regular fa-star opacity-40"></i>';
+                            }
+                        }
+
+                        const uniqueId = 'review-' + Date.now();
+                        const newComment = `<div id="${uniqueId}" class="bg-[#fdfbf7] border border-[#e8dfc5] p-3 rounded-xl shadow-sm space-y-1.5 text-xs transition-all duration-500 transform scale-95 opacity-0"><div class="flex items-center justify-between"><span class="font-bold text-slate-800">${name}</span><div class="text-amber-500 text-[10px]">${commentStars} <span class="text-slate-500 font-bold ml-1 text-[11px]">${rating}</span></div></div><p class="text-slate-600 font-light">"${text}"</p></div>`;
+
+                        reviewContainer.insertAdjacentHTML('beforeend', newComment);
+
+                        setTimeout(() => {
+                            const element = document.getElementById(uniqueId);
+                            if (element) {
+                                element.classList.remove('scale-95', 'opacity-0');
+                                element.classList.add('scale-100', 'opacity-100');
+                            }
+                        }, 50);
+
+                        openReviewToast();
+                        commentForm.reset();
+
+                        ratingValue.textContent = '5.0';
+                        starDisplay.innerHTML = '<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>';
+                    });
+                </script>
+</body>
+
+</html>

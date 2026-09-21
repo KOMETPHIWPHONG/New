@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายละเอียดสินค้า เหวนอีเเป๊ชุบซิงค์ - TIPWONG INDUSTRIAL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght=300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Anuphan', sans-serif;
+        }
+
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #fdfcf9;
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #e3d9bf;
+            border-radius: 10px;
+        }
+
+        .star-slider {
+            accent-color: #b49352;
+        }
+
+        .star-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #1e2d4a;
+            cursor: pointer;
+            border: 2px solid #b49352;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-[linear-gradient(135deg,#0F172A_0%,#450A0A_50%,#000000_100%)] min-h-screen p-4 md:p-8 flex items-center justify-center relative overflow-x-hidden">
+</body>
+
+    <div
+        class="absolute inset-0 opacity-[0.04] pointer-events-none bg-[linear-gradient(to_right,#b49352_1px,transparent_1px),linear-gradient(to_bottom,#b49352_1px,transparent_1px)] bg-[size:32px_32px]">
+    </div>
+
+    <div class="fixed top-4 left-4 z-40">
+        <a href="index.html#shop"
+            class="flex items-center gap-2 bg-[#1e2d4a] hover:bg-[#2a3e63] text-[#fdfcf9] hover:text-[#b49352] border border-[#b49352]/30 px-4 py-2 rounded-xl text-xs font-bold shadow-lg transition-all duration-300 backdrop-blur-sm group">
+            <i class="fa-solid fa-house transition-transform group-hover:-translate-y-0.5"></i>
+            <span>หน้าเมนูหลัก</span>
+        </a>
+    </div>
+
+    <div id="toast-notification"
+        class="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-xl bg-white rounded-2xl shadow-xl border border-emerald-100 p-4 flex items-start gap-3 transform -translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <div
+            class="bg-emerald-500 text-white rounded-lg p-2 flex items-center justify-center shrink-0 w-10 h-10 text-lg shadow-sm">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1">✨ บันทึกรายการสำเร็จ!</h4>
+            <p id="toast-item-details" class="text-[11px] text-slate-500 truncate mt-0.5">
+                เพิ่มสินค้าลงรายการเรียบร้อยแล้ว</p>
+        </div>
+        <button onclick="closeToast()" class="text-slate-300 hover:text-slate-500 text-sm p-1">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <div id="toast-review-notification"
+        class="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-md bg-[#1e2d4a] text-white rounded-2xl shadow-2xl border border-[#b49352]/40 p-4 flex items-center gap-3 transform -translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <div
+            class="bg-[#8c6f34] text-white rounded-xl p-2 flex items-center justify-center shrink-0 w-10 h-10 text-base shadow-md">
+            <i class="fa-solid fa-paper-plane"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+            <h4 class="text-xs font-bold text-[#b49352] flex items-center gap-1">✨ ส่งความคิดเห็นสำเร็จ!</h4>
+            <p class="text-[11px] text-slate-300 mt-0.5">ขอบคุณสำหรับรีวิวและข้อมูลของคุณครับ</p>
+        </div>
+        <button onclick="closeReviewToast()" class="text-slate-400 hover:text-white text-sm p-1">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <div id="quotation-modal"
+        class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div
+            class="bg-white w-full max-w-md rounded-2xl shadow-2xl border border-slate-100 overflow-hidden transform scale-95 transition-transform duration-300">
+            <div class="flex items-center justify-between p-4 border-b border-slate-100">
+                <h3 class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                    <i class="fa-solid fa-file-invoice-dollar text-red-600"></i> รายการขอใบเสนอราคาทั้งหมด
+                </h3>
+                <button onclick="closeModal()"
+                    class="w-7 h-7 bg-slate-100 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors">
+                    <i class="fa-solid fa-xmark text-xs"></i>
+                </button>
+            </div>
+            <div class="p-4 bg-slate-50/50">
+                <div
+                    class="bg-white border border-slate-200/80 rounded-xl p-4 flex justify-between items-center shadow-sm">
+                    <div>
+                        <h4 id="modal-product-name" class="text-xs font-bold text-slate-800">แหวนอีแปะชุบซิงค์</h4>
+                        <p id="modal-spec" class="text-[11px] text-red-600 font-bold mt-1">สเปกขนาด: --</p>
+                    </div>
+                    <div class="text-right">
+                        <span id="modal-qty" class="text-xs font-bold text-slate-800 block">1 หน่วย</span>
+                        <span id="modal-price" class="text-[10px] text-slate-400 font-light">ราคา -- บาท</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-white border-t border-slate-100">
+                <a id="line-share-btn" href="https://line.me" target="_blank"
+                    class="flex items-center justify-center gap-2 bg-[#06C755] text-white rounded-xl py-3 text-xs font-bold hover:brightness-105 transition-all shadow-md w-full text-center">
+                    <i class="fa-brands fa-line text-base"></i> ตกลงการสั่งซื้อสินค้าผ่าน LINE
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <main
+        class="w-full max-w-6xl bg-gradient-to-b from-[#fdfcf9] to-[#f9f6ee] rounded-[2.5rem] shadow-2xl border-2 border-[#e3d7b9] p-4 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative z-10">
+
+        <div class="lg:col-span-4 w-full lg:sticky lg:top-6 space-y-4">
+            <div
+                class="flex flex-col justify-center items-center bg-gradient-to-br from-[#f5edd6] via-[#ede3c5] to-[#dfd3b0] rounded-[2rem] p-6 border border-[#dfd2ad] aspect-square w-full relative overflow-hidden shadow-inner">
+                <span
+                    class="absolute top-4 right-4 bg-[#1e2d4a] text-[#fcfbf7] text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-md">PREMIUM
+                    GRADE</span>
+                <img src="image/แหวนอีแปะชุบซิงค์.jpg" alt="แหวนอีแปะชุบซิงค์ ยกลัง TIPWONG INDUSTRIAL"
+                    class="w-full h-full object-cover">
+            </div>
+
+            <a href="https://line.me" target="_blank"
+                class="flex items-center justify-center gap-2 bg-[#06C755] text-white rounded-2xl py-3.5 text-xs font-bold hover:brightness-105 transition-all shadow-md w-full text-center">
+                <i class="fa-brands fa-line text-base"></i> สอบถามราคาส่งยกลังพิเศษผ่าน LINE
+            </a>
+            <div
+                class="bg-gradient-to-r from-[#1e2d4a] to-[#2a3e63] text-white p-4 rounded-2xl shadow-md border border-[#2e3f5e] space-y-2">
+                <h3 class="text-xs font-bold text-[#b49352] flex items-center gap-2">
+                    <i class="fa-solid fa-screwdriver-wrench"></i> การใช้งาน (Application)
+                </h3>
+                <p class="text-xs text-slate-200 leading-relaxed font-light">
+                    เหมาะสำหรับ <span
+                        class="font-bold text-white underline decoration-[#b49352] decoration-2">รองใต้หัวน็อตและตัวเมียเพื่อกระจายแรงกด</span>
+                    ป้องกันไม่ให้พื้นผิวชิ้นงานเกิดความเสียหายหรือยุบตัวจากการขันแน่น
+                    ช่วยเพิ่มพื้นที่สัมผัสทำให้โครงสร้างยึดติดได้
+                    <span class="font-semibold text-white">แน่นหนาและมั่นคงยิ่งขึ้น</span>
+                    ทนทานต่อแรงสั่นสะเทือนในเครื่องจักร
+                    พร้อมเคลือบผิวซิงค์ (Zinc Plated) ช่วยป้องกันสนิมและการกัดกร่อนได้อย่างมีประสิทธิภาพ
+                    ตอบโจทย์ทั้งงานซ่อมแซมทั่วไป งานโครงสร้างเหล็ก งานยานยนต์
+                    และงานอุตสาหกรรมหนักที่ต้องการความปลอดภัยสูง
+                </p>
+            </div>
+        </div>
+
+        <div class="lg:col-span-8 space-y-6">
+            <div class="space-y-2">
+                <div class="flex flex-wrap items-center gap-2">
+                    <span
+                        class="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-gradient-to-r from-[#9e2a2a] to-[#701515] px-3.5 py-1 rounded-full shadow-sm">
+                        <i class="fa-solid fa-industry"></i> TIPWONG INDUSTRIAL
+                    </span>
+                    <span
+                        class="inline-flex items-center gap-1 text-xs font-bold text-emerald-800 bg-emerald-100/80 border border-emerald-300 px-2.5 py-0.5 rounded-full">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> มีสินค้าพร้อมส่ง
+                    </span>
+                </div>
+
+                <h1 class="text-3xl md:text-4xl font-extrabold text-[#1e2d4a] tracking-tight leading-tight">
+                    แหวนอีแปะชุบชิ้งค์<br>
+                    <span
+                        class="text-xl md:text-2xl font-bold bg-gradient-to-r from-[#1e2d4a] via-[#b49352] to-[#1e2d4a] bg-clip-text text-transparent">ซีลยางกันน้ำซึมเกรดพรีเมียม
+                        สำหรับงานหลังคาและสลักภัณฑ์</span>
+                </h1>
+
+                <h1 class="text-2xl md:text-3xl font-extrabold text-[#1e2d4a] tracking-tight leading-tight">
+                    <span class="text-xl md:text-2xl">แหวนอีแปะชุบซิงค์ </span><br>
+                    <span
+                        class="text-xs md:text-sm font-bold bg-gradient-to-r from-[#1e2d4a] via-[#b49352] to-[#1e2d4a] bg-clip-text text-transparent">เหล็กชุบแข็ง
+                        เกลียวคมลึก หัวแฉกไม่รูดง่าย สำหรับงานฝ้าและผนังเบา</span>
+                </h1>
+            </div>
+
+            <div class="border border-slate-300 rounded-2xl overflow-hidden shadow-md bg-white">
+                <div
+                    class="bg-gradient-to-r from-slate-800 to-slate-700 text-white px-4 py-3 text-xs font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-weight-scale"></i>
+                    <span>ตารางราคาสินค้าราคาส่งตามน้ำหนัก (หน่วย: กิโลกรัม)</span>
+                </div>
+                <div class="overflow-x-auto p-2">
+                    <table class="w-full text-center border-separate border-spacing-1 text-xs">
+                        <thead>
+                            <tr class="text-slate-700 bg-slate-100 font-bold">
+                                <th class="p-2 border rounded-lg">รายละเอียดสินค้า</th>
+                                <th class="p-2 border rounded-lg">บรรจุ</th>
+                                <th class="p-2 border rounded-lg">ราคาต่อกิโลกรัม</th>
+                                <th class="p-2 border rounded-lg">สถานะ</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-slate-600">
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-2 border rounded-lg font-medium text-left">1/8" (≈2,600 ตัว/กก.)</td>
+                                <td class="p-2 border rounded-lg">1 kg.</td>
+                                <td class="p-2 border rounded-lg font-bold text-slate-800">320</td>
+                                <td class="p-2 border rounded-lg"><span
+                                        class="bg-emerald-50 text-emerald-600 px-2 py-1 rounded-md font-semibold text-[11px]">พร้อมส่ง</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-2 border rounded-lg font-medium text-left">5/32" (≈1,780 ตัว/กก.)</td>
+                                <td class="p-2 border rounded-lg">1 kg.</td>
+                                <td class="p-2 border rounded-lg font-bold text-slate-800">300</td>
+                                <td class="p-2 border rounded-lg"><span
+                                        class="bg-emerald-50 text-emerald-600 px-2 py-1 rounded-md font-semibold text-[11px]">พร้อมส่ง</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-2 border rounded-lg font-medium text-left">3/16" (≈1,500 ตัว/กก.)</td>
+                                <td class="p-2 border rounded-lg">1 kg.</td>
+                                <td class="p-2 border rounded-lg font-bold text-slate-800">300</td>
+                                <td class="p-2 border rounded-lg"><span
+                                        class="bg-emerald-50 text-emerald-600 px-2 py-1 rounded-md font-semibold text-[11px]">พร้อมส่ง</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-2 border rounded-lg font-medium text-left">1/4" (≈860 ตัว/กก.)</td>
+                                <td class="p-2 border rounded-lg">1 kg.</td>
+                                <td class="p-2 border rounded-lg font-bold text-slate-800">300</td>
+                                <td class="p-2 border rounded-lg"><span
+                                        class="bg-emerald-50 text-emerald-600 px-2 py-1 rounded-md font-semibold text-[11px]">พร้อมส่ง</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-2 border rounded-lg font-medium text-left">5/16" (≈760 ตัว/กก.)</td>
+                                <td class="p-2 border rounded-lg">1 kg.</td>
+                                <td class="p-2 border rounded-lg font-bold text-slate-800">300</td>
+                                <td class="p-2 border rounded-lg"><span
+                                        class="bg-emerald-50 text-emerald-600 px-2 py-1 rounded-md font-semibold text-[11px]">พร้อมส่ง</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-2 border rounded-lg font-medium text-left">3/8" (≈590 ตัว/กก.)</td>
+                                <td class="p-2 border rounded-lg">1 kg.</td>
+                                <td class="p-2 border rounded-lg font-bold text-slate-800">300</td>
+                                <td class="p-2 border rounded-lg"><span
+                                        class="bg-emerald-50 text-emerald-600 px-2 py-1 rounded-md font-semibold text-[11px]">พร้อมส่ง</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ปุ่มเมนูลอย รายการขอใบเสนอราคา (มุมขวาบน) -->
+            <button onclick="toggleCartModal()"
+                class="fixed top-6 right-6 z-40 bg-[#1e293b] text-white px-5 py-3 rounded-full font-bold text-sm shadow-xl flex items-center gap-2 hover:bg-[#2d3a4f] transition cursor-pointer">
+                <i class="fa-solid fa-file-invoice-dollar"></i> รายการขอใบเสนอราคา
+                <span id="cart-count"
+                    class="bg-red-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold hidden">0</span>
+            </button>
+
+            <main class="max-w-xl mx-auto space-y-4">
+                <div
+                    class="bg-gradient-to-b from-[#ede6d0] to-[#e4dac0] border border-[#d3c6a4] p-5 rounded-2xl space-y-4 shadow-inner">
+                    <!-- ปรับแก้ให้ใช้ grid-cols-3 และกำหนด w-full ทุกชิ้นเพื่อให้ขนาดช่องเท่ากันเป๊ะ -->
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="w-full">
+                            <label class="block text-[10px] font-bold text-slate-700 mb-1">เลือกประเภทราคา</label>
+                            <select id="price-table-selector" onchange="updateDropdownOptions(this.value)"
+                                class="w-full bg-[#fdfcf9] border border-[#c5b896] rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-700 focus:outline-none h-[34px]">
+                                <option value="wholesale" selected>ราคาส่ง</option>
+                            </select>
+                        </div>
+                        <div class="w-full">
+                            <label class="block text-[10px] font-bold text-slate-700 mb-1">เลือกขนาดที่ต้องการ</label>
+                            <select id="product-size-select"
+                                class="w-full bg-[#fdfcf9] border border-[#c5b896] rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-700 focus:outline-none h-[34px]">
+                            </select>
+                        </div>
+                        <div class="w-full">
+                            <label id="qty-label-text"
+                                class="block text-[10px] font-bold text-slate-700 mb-1 truncate">ระบุจำนวน
+                                (กิโลกรัม)</label>
+                            <div
+                                class="flex items-center bg-[#fdfcf9] border border-[#c5b896] rounded-xl overflow-hidden h-[34px]">
+                                <button type="button" onclick="stepQty(-1)"
+                                    class="px-2 h-full text-slate-500 hover:bg-slate-100 font-bold text-xs">-</button>
+                                <input id="product-qty-input" type="number" value="1" min="1"
+                                    class="w-full h-full bg-[#fdfcf9] text-center text-xs font-bold text-slate-700 focus:outline-none">
+                                <button type="button" onclick="stepQty(1)"
+                                    class="px-2 h-full text-slate-500 hover:bg-slate-100 font-bold text-xs">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <button onclick="handleOrderSubmit()"
+                            style="background: linear-gradient(to right, #6b0c11, #400508, #210204);"
+                            class="w-full hover:brightness-125 text-white font-black py-4 px-2 rounded-full shadow-lg shadow-red-950/30 text-xs flex items-center justify-center gap-2 duration-100 cursor-pointer uppercase tracking-wider">
+                            <i class="fa-solid fa-cart-plus text-xs"></i> เพิ่มสินค้าลงรายการขอใบเสนอราคา
+                        </button>
+                    </div>
+                </div>
+
+            <!-- Modal แสดงรายการขอใบเสนอราคาทั้งหมด (ตะกร้า) -->
+            <div id="cart-modal"
+                class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+                <div
+                    class="bg-white rounded-[2rem] max-w-lg w-full p-6 shadow-2xl relative space-y-4 border border-slate-100 overflow-hidden">
+                    <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+                        <h3 class="text-sm font-bold text-gray-800 flex items-center gap-2">
+                            <i class="fa-solid fa-file-invoice text-red-600"></i> รายการขอใบเสนอราคาทั้งหมด
+                        </h3>
+                        <button onclick="toggleCartModal()"
+                            class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition cursor-pointer">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+
+                    <div id="cart-items-container" class="max-h-60 overflow-y-auto space-y-3 pr-1"></div>
+
+                    <div class="pt-2">
+                        <button onclick="sendToLine()"
+                            class="w-full bg-[#00ba63] hover:bg-[#00a153] text-white font-bold py-3.5 px-4 rounded-2xl shadow-md text-xs flex items-center justify-center gap-2 transition cursor-pointer">
+                            <i class="fa-brands fa-line text-base"></i> ส่งรายการนี้เพื่อขอราคาพิเศษใน LINE
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toast แจ้งเตือนชั่วคราว -->
+            <div id="toast-notification"
+                class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-lg -translate-y-24 opacity-0 pointer-events-none transition-all duration-300 text-xs flex items-center gap-2">
+                <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                <span id="toast-item-details">เพิ่มสินค้าสำเร็จ</span>
+            </div>
+
+            <script>
+                let currentCart = JSON.parse(localStorage.getItem("shopping_cart")) || [];
+
+                const sizeOptions = {
+                    wholesale: [
+                        { value: "ปลีก|1/8\"|1 kg.|กิโลกรัม", text: "1/8\" (≈2,600 ตัว/กก.)" },
+                        { value: "ปลีก|5/32\"|1 kg.|กิโลกรัม", text: "5/32\" (≈1,780 ตัว/กก.)" },
+                        { value: "ปลีก|3/16\"|1 kg.|กิโลกรัม", text: "3/16\" (≈1,500 ตัว/กก.)" },
+                        { value: "ปลีก|1/4\"|1 kg.|กิโลกรัม", text: "1/4\" (≈860 ตัว/กก.)" },
+                        { value: "ปลีก|5/16\"|1 kg.|กิโลกรัม", text: "5/16\" (≈760 ตัว/กก.)" },
+                        { value: "ปลีก|3/8\"|1 kg.|กิโลกรัม", text: "3/8\" (≈590 ตัว/กก.)" }
+                    ]
+                };
+
+                document.addEventListener("DOMContentLoaded", () => {
+                    currentCart = JSON.parse(localStorage.getItem("shopping_cart")) || [];
+                    updateCartCount();
+                    updateDropdownOptions('wholesale');
+                });
+
+                function updateCartCount() {
+                    const badge = document.getElementById("cart-count");
+                    if (!badge) return;
+                    badge.innerText = currentCart.length;
+                    if (currentCart.length > 0) {
+                        badge.classList.remove("hidden");
+                    } else {
+                        badge.classList.add("hidden");
+                    }
+                }
+
+                function updateDropdownOptions(type) {
+                    const sizeSelect = document.getElementById('product-size-select');
+                    const qtyLabel = document.getElementById('qty-label-text');
+                    qtyLabel.innerText = "ระบุจำนวน (กิโลกรัม)";
+
+                    sizeSelect.innerHTML = '';
+                    (sizeOptions[type] || sizeOptions['wholesale']).forEach(opt => {
+                        const el = document.createElement('option');
+                        el.value = opt.value;
+                        el.innerText = opt.text;
+                        sizeSelect.appendChild(el);
+                    });
+                }
+
+                function stepQty(amount) {
+                    const qtyInput = document.getElementById('product-qty-input');
+                    let currentVal = parseInt(qtyInput.value) || 1;
+                    currentVal += amount;
+                    if (currentVal < 1) currentVal = 1;
+                    qtyInput.value = currentVal;
+                }
+
+                function handleOrderSubmit() {
+                    const sizeSelect = document.getElementById('product-size-select');
+                    const qtyInput = document.getElementById('product-qty-input');
+                    const priceTypeSelector = document.getElementById('price-table-selector');
+
+                    const [type, sizeLabel, priceUnit, unitName] = sizeSelect.value.split('|');
+                    const selectedQty = parseInt(qtyInput.value) || 1;
+                    const selectedPriceType = priceTypeSelector.options[priceTypeSelector.selectedIndex].text;
+
+                    const newItem = {
+                        id: "washer-" + sizeLabel,
+                        name: "แหวนอีแปะชุบซิงค์",
+                        size: sizeLabel,
+                        priceType: selectedPriceType,
+                        packing: unitName,
+                        qty: selectedQty
+                    };
+
+                    let cart = JSON.parse(localStorage.getItem("shopping_cart")) || [];
+                    const existingIndex = cart.findIndex(item => item.id === newItem.id);
+                    if (existingIndex > -1) {
+                        cart[existingIndex].qty += selectedQty;
+                    } else {
+                        cart.push(newItem);
+                    }
+
+                    localStorage.setItem("shopping_cart", JSON.stringify(cart));
+                    currentCart = cart;
+                    updateCartCount();
+
+                    const toast = document.getElementById('toast-notification');
+                    document.getElementById('toast-item-details').innerText = `เพิ่ม "${newItem.name}" ขนาด ${sizeLabel} ลงในรายการแล้ว`;
+                    toast.classList.remove('-translate-y-24', 'opacity-0', 'pointer-events-none');
+
+                    setTimeout(() => {
+                        toast.classList.add('-translate-y-24', 'opacity-0', 'pointer-events-none');
+                        toggleCartModal();
+                    }, 1000);
+                }
+
+                function toggleCartModal() {
+                    const modal = document.getElementById('cart-modal');
+                    modal.classList.toggle('hidden');
+                    if (!modal.classList.contains('hidden')) {
+                        renderCartItems();
+                    }
+                }
+
+                function renderCartItems() {
+                    const container = document.getElementById('cart-items-container');
+                    container.innerHTML = "";
+
+                    if (currentCart.length === 0) {
+                        container.innerHTML = `<div class="text-center py-6 text-gray-400 text-xs">ยังไม่มีรายการสินค้าในใบเสนอราคา</div>`;
+                        return;
+                    }
+
+                    currentCart.forEach((item, index) => {
+                        const itemEl = document.createElement('div');
+                        itemEl.className = "border border-slate-100 rounded-2xl p-4 bg-slate-50/50 flex justify-between items-center";
+                        itemEl.innerHTML = `
+                    <div>
+                        <h4 class="text-sm font-bold text-gray-900">${item.name}</h4>
+                        <p class="text-[12px] text-red-600 font-medium mt-1">ขนาด: ${item.size} • ${item.priceType}</p>
+                        <span class="text-xs text-gray-500 font-semibold">${item.qty} ${item.packing}</span>
+                    </div>
+                    <button onclick="removeItem(${index})" class="text-slate-400 hover:text-red-600 p-2 cursor-pointer transition">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                `;
+                        container.appendChild(itemEl);
+                    });
+                }
+
+                function removeItem(index) {
+                    currentCart.splice(index, 1);
+                    localStorage.setItem("shopping_cart", JSON.stringify(currentCart));
+                    updateCartCount();
+                    renderCartItems();
+                }
+
+                function sendToLine() {
+                    if (currentCart.length === 0) {
+                        alert("กรุณาเพิ่มสินค้าลงในรายการก่อนครับ");
+                        return;
+                    }
+                    let text = "สวัสดีครับ ขอใบเสนอราคาชุดสินค้าดังนี้ครับ:\n";
+                    currentCart.forEach((item, i) => {
+                        text += `${i + 1}. ${item.name} ขนาด ${item.size} จำนวน ${item.qty} ${item.packing}\n`;
+                    });
+                    const encoded = encodeURIComponent(text);
+                    window.open(`https://line.me/R/msg/text/?${encoded}`, '_blank');
+                }
+            </script>
+</body>
+
+</html>

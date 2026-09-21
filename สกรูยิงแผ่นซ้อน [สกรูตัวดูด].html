@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายละเอียดสินค้า สกรูยิงแผ่นซ้อน [สกรูตัวดูด] - TIPWONG INDUSTRIAL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Anuphan', sans-serif;
+        }
+
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #fdfcf9;
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #e3d9bf;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-[linear-gradient(135deg,#0F172A_0%,#450A0A_50%,#000000_100%)] min-h-screen p-4 md:p-8 flex items-center justify-center relative overflow-x-hidden">
+</body>
+
+    <div
+        class="absolute inset-0 opacity-[0.04] pointer-events-none bg-[linear-gradient(to_right,#b49352_1px,transparent_1px),linear-gradient(to_bottom,#b49352_1px,transparent_1px)] bg-[size:32px_32px]">
+    </div>
+
+    <div class="fixed top-4 left-4 z-40">
+        <a href="index.html#shop"
+            class="flex items-center gap-2 bg-[#1e2d4a] hover:bg-[#2a3e63] text-[#fdfcf9] hover:text-[#b49352] border border-[#b49352]/30 px-4 py-2 rounded-xl text-xs font-bold shadow-lg transition-all duration-300 backdrop-blur-sm group">
+            <i class="fa-solid fa-house transition-transform group-hover:-translate-y-0.5"></i>
+            <span>หน้าเมนูหลัก</span>
+        </a>
+    </div>
+
+    <!-- Toast Notification สำหรับแจ้งเตือนสำเร็จ -->
+    <div id="toast-notification"
+        class="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-xl bg-white rounded-2xl shadow-xl border border-emerald-100 p-4 flex items-start gap-3 transform -translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <div
+            class="bg-emerald-500 text-white rounded-lg p-2 flex items-center justify-center shrink-0 w-10 h-10 text-lg shadow-sm">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1">✨ บันทึกรายการสำเร็จ!</h4>
+            <p id="toast-item-details" class="text-[11px] text-slate-500 truncate mt-0.5">
+                เพิ่มสินค้าลงรายการเรียบร้อยแล้ว</p>
+        </div>
+        <button onclick="closeToast()" class="text-slate-300 hover:text-slate-500 text-sm p-1">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <!-- Toast Notification สำหรับรีวิว -->
+    <div id="toast-review-notification"
+        class="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-md bg-[#1e2d4a] text-white rounded-2xl shadow-2xl border border-[#b49352]/40 p-4 flex items-center gap-3 transform -translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <div
+            class="bg-[#8c6f34] text-white rounded-xl p-2 flex items-center justify-center shrink-0 w-10 h-10 text-base shadow-md">
+            <i class="fa-solid fa-paper-plane"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+            <h4 class="text-xs font-bold text-[#b49352] flex items-center gap-1">✨ ส่งความคิดเห็นสำเร็จ!</h4>
+            <p class="text-[11px] text-slate-300 mt-0.5">ขอบคุณสำหรับรีวิวและข้อมูลของคุณครับ</p>
+        </div>
+        <button onclick="closeReviewToast()" class="text-slate-400 hover:text-white text-sm p-1">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <!-- Quotation Modal สำหรับแสดงรายการใบเสนอราคา -->
+    <div id="quotation-modal"
+        class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div
+            class="bg-white w-full max-w-md rounded-2xl shadow-2xl border border-slate-100 overflow-hidden transform scale-95 transition-transform duration-300">
+            <div class="flex items-center justify-between p-4 border-b border-slate-100">
+                <h3 class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                    <i class="fa-solid fa-file-invoice-dollar text-red-600"></i> รายการขอใบเสนอราคาทั้งหมด
+                </h3>
+                <button onclick="closeModal()"
+                    class="w-7 h-7 bg-slate-100 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors">
+                    <i class="fa-solid fa-xmark text-xs"></i>
+                </button>
+            </div>
+            <div class="p-4 bg-slate-50/50">
+                <div
+                    class="bg-white border border-slate-200/80 rounded-xl p-4 flex justify-between items-center shadow-sm">
+                    <div>
+                        <h4 id="modal-product-name" class="text-xs font-bold text-slate-800">สกรูยิงแผ่นซ้อน
+                            [สกรูตัวดูด]</h4>
+                        <p id="modal-spec" class="text-[11px] text-red-600 font-bold mt-1">สเปกขนาด: --</p>
+                    </div>
+                    <div class="text-right">
+                        <span id="modal-qty" class="text-xs font-bold text-slate-800 block">1 หน่วย</span>
+                        <span id="modal-price" class="text-[10px] text-slate-400 font-light">ราคา -- บาท</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-white border-t border-slate-100">
+                <a id="line-share-btn" href="https://line.me" target="_blank"
+                    class="flex items-center justify-center gap-2 bg-[#06C755] text-white rounded-xl py-3 text-xs font-bold hover:brightness-105 transition-all shadow-md w-full text-center">
+                    <i class="fa-brands fa-line text-base"></i> ตกลงการสั่งซื้อสินค้าผ่าน LINE
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <main
+        class="w-full max-w-6xl bg-white rounded-[2.5rem] shadow-xl border border-[#f0e6d2] overflow-hidden p-6 md:p-10 grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-start relative z-10">
+
+        <!-- คอลัมน์ซ้าย: รูปภาพสินค้า -->
+        <div class="md:col-span-5 w-full md:sticky md:top-6">
+            <div
+                class="flex justify-center items-center bg-gradient-to-br from-[#fbfaf7] to-[#f3edd9] rounded-[2rem] p-8 border border-white shadow-inner aspect-square w-full relative shadow-md mb-3 overflow-hidden">
+                <div
+                    class="absolute top-5 right-5 bg-white/80 backdrop-blur-sm border border-[#e3d9bf] text-[#b49352] text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-sm z-10">
+                    PREMIUM SPEC
+                </div>
+                <div class="absolute bottom-4 left-5 text-[#b49352]/20 text-4xl pointer-events-none z-10">
+                    <i class="fa-solid fa-box-open"></i>
+                </div>
+                <img id="product-main-img" src="image/สกรูยิงแผ่นซ้อน [สกรูตัวดูด] .jpg"
+                    alt="สกรูยิงแผ่นซ้อน [สกรูตัวดูด] ปลายสว่าน ยางดำ EPDM"
+                    class="max-h-72 md:max-h-80 object-contain drop-shadow-md transition-transform duration-500 hover:scale-105">
+            </div>
+            <a href="https://line.me" target="_blank"
+                class="flex items-center justify-center gap-2 bg-[#06C755] text-white rounded-xl py-2.5 text-xs font-bold hover:brightness-105 transition shadow-sm text-center">
+                <i class="fa-brands fa-line text-sm"></i> สอบถามราคาส่งยกลังพิเศษ
+            </a>
+            <div
+                class="bg-gradient-to-r from-[#1e2d4a] to-[#2a3e63] text-white p-4 rounded-2xl shadow-md border border-[#2e3f5e] space-y-2 mt-3">
+                <h3 class="text-xs font-bold text-[#b49352] flex items-center gap-2">
+                    <i class="fa-solid fa-screwdriver-wrench"></i> การใช้งาน (Application)
+                </h3>
+                <p class="text-xs text-slate-200 leading-relaxed font-light">
+                    เหมาะสำหรับ <span
+                        class="font-bold text-white underline decoration-[#b49352] decoration-2">ยิงยึดแผ่นหลังคาเมทัลชีทซ้อนทับกัน</span>
+                    ช่วยให้การยึดแผ่นหลังคาแน่นหนา ป้องกันการรั่วซึมของน้ำฝนได้อย่างมีประสิทธิภาพ
+                    พร้อมซีลยาง EPDM เกรดพรีเมียมทนแดดทนฝน ยืดหยุ่นสูง แนบสนิทไปกับผิวโลหะ
+                    <span class="font-semibold text-white">ตอบโจทย์งานหลังคาและงานโครงสร้างเหล็กทั่วไป</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- คอลัมน์ขวา: รายละเอียดและฟอร์มเลือกสินค้า -->
+        <div class="md:col-span-7 space-y-6">
+            <div class="space-y-3">
+                <div class="flex flex-wrap items-center gap-2">
+                    <span
+                        class="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-gradient-to-r from-[#9e2a2a] to-[#701515] px-4 py-1.5 rounded-full shadow-md">
+                        <i class="fa-solid fa-industry"></i> TIPWONG INDUSTRIAL
+                    </span>
+                    <span
+                        class="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        มีสินค้าในสต็อกพร้อมส่ง
+                    </span>
+                </div>
+
+                <h1 class="text-3xl md:text-4xl font-extrabold text-[#1e2d4a] tracking-tight leading-tight">
+                    สกรูยิงแผ่นซ้อน [สกรูตัวดูด]<br>
+                    <span
+                        class="text-xl md:text-2xl font-bold bg-gradient-to-r from-[#1e2d4a] via-[#b49352] to-[#1e2d4a] bg-clip-text text-transparent">ปลายสว่าน
+                        พร้อมซีลยางดำ EPDM กันซึมพรีเมียม (ยกกล่อง)</span>
+                </h1>
+
+            <!-- กล่องแสดงราคาตามตัวเลือก (ไดนามิก) -->
+            <div
+                class="flex items-center justify-between bg-gradient-to-r from-[#fdfbf7] to-[#f7f2e4] p-4 rounded-2xl border border-[#e9e1cc] shadow-sm">
+                <div>
+                    <span id="price-label-text"
+                        class="text-[11px] font-bold text-[#b49352] block uppercase tracking-wider mb-0.5">ราคาส่ง
+                        (Wholesale Price)</span>
+                    <span class="text-3xl font-black text-[#a61c1c] tracking-tight">
+                        <span id="display-price">220.00</span> <span class="text-sm font-bold text-gray-500 ml-0.5"
+                            id="display-unit-label">บาท / กล่อง</span>
+                    </span>
+                </div>
+                <div class="text-right">
+                    <span
+                        class="inline-flex items-center gap-1.5 bg-white border border-[#e9e1cc] text-[#1e2d4a] text-xs font-bold px-3 py-2 rounded-xl shadow-sm">
+                        <i class="fa-solid fa-layer-group text-[#b49352]"></i> บรรจุ 100 ตัว / 1 กล่อง
+                    </span>
+                </div>
+            </div>
+
+            <!-- ส่วนตารางราคาปลีก -->
+            <div class="space-y-2 mt-4">
+                <div class="flex items-center justify-between">
+                    <h3
+                        class="text-xs font-extrabold text-[#1e2d4a] uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-table-cells text-[#b49352]"></i> ตารางราคาปลีก (Retail Price)
+                    </h3>
+                    <span class="text-[10px] text-slate-400">หน่วยบรรจุ: 100 ตัว/กล่อง</span>
+                </div>
+                <div class="overflow-x-auto border border-[#e3d9bf] rounded-xl shadow-sm bg-white">
+                    <table class="w-full text-left text-xs text-slate-700">
+                        <thead class="bg-[#1e2d4a] text-white font-semibold">
+                            <tr>
+                                <th class="p-2.5">ขนาดสเปก (Size)</th>
+                                <th class="p-2.5 text-center">บรรจุ/กล่อง</th>
+                                <th class="p-2.5 text-center">บรรจุ/ลัง</th>
+                                <th class="p-2.5 text-right">ราคาปลีก (Retail)</th>
+                                <th class="p-2.5 text-center">สถานะ</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr class="hover:bg-slate-50 transition">
+                                <td class="p-2.5 font-bold text-slate-800">#15-15x3/4" (20 mm)</td>
+                                <td class="p-2.5 text-center text-slate-500">100 ตัว</td>
+                                <td class="p-2.5 text-center text-slate-600 font-medium">5,000 ตัว</td>
+                                <td class="p-2.5 text-right font-extrabold text-red-700">฿220.00 บาท</td>
+                                <td class="p-2.5 text-center"><span
+                                        class="bg-emerald-50 text-emerald-600 border border-emerald-200 px-2.5 py-0.5 rounded-full text-[10px] font-bold">พร้อมส่ง</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ส่วนเลือกสินค้าและจำนวน (เหลือเฉพาะราคาปลีก) -->
+            <div
+                class="bg-gradient-to-b from-[#ede6d0] to-[#e4dac0] border border-[#d3c6a4] p-5 rounded-2xl space-y-4 shadow-inner">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-700 mb-1">เลือกขนาดที่ต้องการ</label>
+                        <select id="product-size-select" onchange="updatePriceDisplay()"
+                            class="w-full bg-[#fdfcf9] border border-[#c5b896] rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-700 focus:outline-none">
+                        </select>
+                    </div>
+                    <div>
+                        <label id="qty-label-text" class="block text-[10px] font-bold text-slate-700 mb-1">ระบุจำนวน
+                            (กล่อง)</label>
+                        <div
+                            class="flex items-center bg-[#fdfcf9] border border-[#c5b896] rounded-xl overflow-hidden h-[34px]">
+                            <button type="button" onclick="stepQty(-1)"
+                                class="px-2.5 h-full text-slate-500 hover:bg-slate-100 font-bold text-xs">-</button>
+                            <input id="product-qty-input" type="number" value="1" min="1"
+                                class="w-full h-full bg-[#fdfcf9] text-center text-xs font-bold text-slate-700 focus:outline-none">
+                            <button type="button" onclick="stepQty(1)"
+                                class="px-2.5 h-full text-slate-500 hover:bg-slate-100 font-bold text-xs">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- กล่องเงื่อนไข: ราคาปลีก -->
+            <div id="retail-info-box"
+                class="bg-white/70 border border-[#d3c6a4] rounded-xl p-3 text-xs text-slate-700 space-y-1.5 transition-all mt-4">
+                <div class="font-bold text-[#1e2d4a] flex items-center gap-1.5">
+                    <i class="fa-solid fa-circle-info text-amber-600"></i> กำลังเลือก: ราคาปลีก (Retail Price)
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-[11px]">
+                    <div class="bg-white p-2 rounded-lg border border-slate-200">
+                        <span class="block text-slate-400 font-semibold">กลุ่มเป้าหมาย</span>
+                        <span class="font-bold text-slate-800">ลูกค้านำไปใช้งานทั่วไป</span>
+                    </div>
+                    <div class="bg-white p-2 rounded-lg border border-slate-200">
+                        <span class="block text-slate-400 font-semibold">จำนวนการซื้อ</span>
+                        <span class="font-bold text-slate-800">ซื้อตามความต้องการ</span>
+                    </div>
+                    <div class="bg-white p-2 rounded-lg border border-slate-200">
+                        <span class="block text-slate-400 font-semibold">ระดับราคา</span>
+                        <span class="font-bold text-slate-800">ราคามาตรฐานทั่วไป</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ปุ่มสั่งซื้อ -->
+            <div class="pt-4">
+                <button onclick="handleOrderSubmit()"
+                    style="background: linear-gradient(to right, #6b0c11, #400508, #210204);"
+                    class="w-full hover:brightness-125 text-white font-black py-4 px-2 rounded-full shadow-lg shadow-red-950/30 text-xs flex items-center justify-center gap-2 duration-100 cursor-pointer uppercase tracking-wider">
+                    <i class="fa-solid fa-cart-plus text-xs"></i> เพิ่มรายการขอใบเสนอราคา
+                </button>
+            </div>
+    </main>
+
+    <!-- Toast Notifications -->
+    <div id="toast-notification"
+        class="fixed top-5 right-5 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl transform -translate-y-24 opacity-0 pointer-events-none transition-all duration-300 z-50 flex items-center gap-3 text-xs">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+        <div>
+            <p class="font-bold">✨ บันทึกรายการสำเร็จ!</p>
+            <p id="toast-item-details" class="text-slate-300 text-[11px]"></p>
+        </div>
+    </div>
+
+    <!-- Quotation Modal -->
+    <div id="quotation-modal"
+        class="fixed inset-0 bg-black/50 flex items-center justify-center opacity-0 pointer-events-none transition-all z-50">
+        <div class="bg-white rounded-3xl p-6 w-[92%] max-w-lg shadow-2xl transform scale-95 transition-all relative">
+            <div class="flex items-center justify-between border-b pb-4 mb-4">
+                <h3 class="font-bold text-base text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-file-invoice-dollar text-[#6b0c11]"></i> รายการขอใบเสนอราคาทั้งหมด
+                </h3>
+                <button onclick="closeModal()"
+                    class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 cursor-pointer transition">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+
+            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 mb-6 space-y-1 shadow-inner">
+                <p id="modal-product-name" class="font-extrabold text-sm text-[#1e2d4a]">สกรูยิงแผ่นซ้อน [สกรูตัวดูด]
+                </p>
+                <div class="flex justify-between items-end pt-1">
+                    <p id="modal-spec" class="text-xs text-[#6b0c11] font-bold">สเปกขนาด: #15-15x3/4" • ราคาปลีก</p>
+                    <p id="modal-qty" class="text-xs text-slate-700 font-bold">1 กล่อง</p>
+                </div>
+            </div>
+
+            <div>
+                <a id="line-share-btn" href="#" target="_blank"
+                    style="background: linear-gradient(to right, #06C755, #06C755);"
+                    class="w-full py-3.5 rounded-2xl text-white font-bold text-xs text-center flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 hover:brightness-105 transition cursor-pointer uppercase tracking-wider">
+                    <i class="fa-brands fa-line text-base"></i> ส่งรายการนี้เพื่อขอราคาพิเศษใน LINE
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sizeOptions = [
+            { value: "retail|#15-15x3/4\" (20 mm)|100 ตัว|กล่อง|220.00", text: "#15-15x3/4\" (20 mm) - ราคาปลีก (฿220.00)" }
+        ];
+
+        function updateDropdownOptions() {
+            const sizeSelect = document.getElementById('product-size-select');
+            if (!sizeSelect) return;
+
+            sizeSelect.innerHTML = '';
+            sizeOptions.forEach(opt => {
+                const el = document.createElement('option');
+                el.value = opt.value;
+                el.innerText = opt.text;
+                sizeSelect.appendChild(el);
+            });
+            updatePriceDisplay();
+        }
+
+        function updatePriceDisplay() {
+            // ฟังก์ชันรองรับในกรณีต้องการแสดงผลราคาเพิ่มเติม
+        }
+
+        window.onload = function () {
+            updateDropdownOptions();
+        };
+
+        function stepQty(amount) {
+            const qtyInput = document.getElementById('product-qty-input');
+            let currentVal = parseInt(qtyInput.value) || 1;
+            currentVal += amount;
+            if (currentVal < 1) currentVal = 1;
+            qtyInput.value = currentVal;
+        }
+
+        function handleOrderSubmit() {
+            const sizeSelect = document.getElementById('product-size-select');
+            const qtyInput = document.getElementById('product-qty-input');
+
+            if (!sizeSelect.value) return;
+
+            const [type, sizeLabel, priceUnit, unitName, priceVal] = sizeSelect.value.split('|');
+            const selectedQty = qtyInput.value;
+            const selectedPriceType = 'ราคาปลีก';
+            const totalPrice = (parseFloat(priceVal) * parseInt(selectedQty)).toFixed(2);
+
+            document.getElementById('toast-item-details').innerText = `สินค้า: สกรูยิงแผ่นซ้อน ขนาด: ${sizeLabel} ราคา: ${selectedPriceType} จำนวน: ${selectedQty} ${unitName}`;
+            document.getElementById('modal-spec').innerText = `สเปกขนาด: ${sizeLabel} • ${selectedPriceType}`;
+            document.getElementById('modal-qty').innerText = `${selectedQty} ${unitName}`;
+
+            const toast = document.getElementById('toast-notification');
+            toast.classList.remove('-translate-y-24', 'opacity-0', 'pointer-events-none');
+
+            const lineMessage = encodeURIComponent(`สวัสดีครับ สนใจขอใบเสนอราคา สกรูยิงแผ่นซ้อน [สกรูตัวดูด]\n- ขนาด: ${sizeLabel}\n- ประเภท: ${selectedPriceType}\n- จำนวน: ${selectedQty} ${unitName}\n- ราคารวม: ฿${totalPrice} บาท`);
+            document.getElementById('line-share-btn').href = `https://line.me/R/msg/text/?${lineMessage}`;
+
+            setTimeout(() => {
+                closeToast();
+                openModal();
+            }, 1500);
+        }
+
+        function closeToast() {
+            const toast = document.getElementById('toast-notification');
+            toast.classList.add('-translate-y-24', 'opacity-0', 'pointer-events-none');
+        }
+
+        function openModal() {
+            const modal = document.getElementById('quotation-modal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.querySelector('div').classList.remove('scale-95');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('quotation-modal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.querySelector('div').classList.add('scale-95');
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายละเอียดสินค้า - TIPWONG INDUSTRIAL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght=300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Anuphan', sans-serif;
+        }
+
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #fdfcf9;
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #e3d9bf;
+            border-radius: 10px;
+        }
+
+        .star-slider {
+            accent-color: #b49352;
+        }
+
+        .star-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #1e2d4a;
+            cursor: pointer;
+            border: 2px solid #b49352;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-[linear-gradient(135deg,#0F172A_0%,#450A0A_50%,#000000_100%)] min-h-screen p-4 md:p-8 flex items-center justify-center relative overflow-x-hidden">
+</body>
+
+
+
+    <div
+        class="absolute inset-0 opacity-[0.04] pointer-events-none bg-[linear-gradient(to_right,#b49352_1px,transparent_1px),linear-gradient(to_bottom,#b49352_1px,transparent_1px)] bg-[size:32px_32px]">
+    </div>
+
+    <div class="fixed top-4 left-4 z-40">
+        <a href="index.html#shop"
+            class="flex items-center gap-2 bg-[#1e2d4a] hover:bg-[#2a3e63] text-[#fdfcf9] hover:text-[#b49352] border border-[#b49352]/30 px-4 py-2 rounded-xl text-xs font-bold shadow-lg transition-all duration-300 backdrop-blur-sm group">
+            <i class="fa-solid fa-house transition-transform group-hover:-translate-y-0.5"></i>
+            <span>หน้าเมนูหลัก</span>
+        </a>
+    </div>
+
+    <div id="toast-notification"
+        class="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-xl bg-white rounded-2xl shadow-xl border border-emerald-100 p-4 flex items-start gap-3 transform -translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <div
+            class="bg-emerald-500 text-white rounded-lg p-2 flex items-center justify-center shrink-0 w-10 h-10 text-lg shadow-sm">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1">✨ บันทึกรายการสำเร็จ!</h4>
+            <p id="toast-item-details" class="text-[11px] text-slate-500 truncate mt-0.5">
+                เพิ่มสินค้าลงรายการเรียบร้อยแล้ว</p>
+        </div>
+        <button onclick="closeToast()" class="text-slate-300 hover:text-slate-500 text-sm p-1">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <div id="toast-review-notification"
+        class="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-md bg-[#1e2d4a] text-white rounded-2xl shadow-2xl border border-[#b49352]/40 p-4 flex items-center gap-3 transform -translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <div
+            class="bg-gradient-to-br from-[#b49352] to-[#8c6f34] text-white rounded-xl p-2 flex items-center justify-center shrink-0 w-10 h-10 text-base shadow-md animate-bounce">
+            <i class="fa-solid fa-paper-plane"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+            <h4 class="text-xs font-bold text-[#b49352]">✨ ส่งความคิดเห็นสำเร็จ!</h4>
+            <p class="text-[11px] text-slate-300 mt-0.5">ขอบคุณสำหรับรีวิวและข้อมูลของคุณครับ</p>
+        </div>
+        <button onclick="closeReviewToast()" class="text-slate-400 hover:text-white text-sm p-1">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <div id="quotation-modal"
+        class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div
+            class="bg-white w-full max-w-md rounded-2xl shadow-2xl border border-slate-100 overflow-hidden transform scale-95 transition-transform duration-300">
+            <div class="flex items-center justify-between p-4 border-b border-slate-100">
+                <h3 class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                    <i class="fa-solid fa-file-invoice-dollar text-red-600"></i> รายการขอใบเสนอราคาทั้งหมด
+                </h3>
+                <button onclick="closeModal()"
+                    class="w-7 h-7 bg-slate-100 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors">
+                    <i class="fa-solid fa-xmark text-xs"></i>
+                </button>
+            </div>
+            <div class="p-4 bg-slate-50/50">
+                <div
+                    class="bg-white border border-slate-200/80 rounded-xl p-4 flex justify-between items-center shadow-sm">
+                    <div>
+                        <h4 id="modal-product-name" class="text-xs font-bold text-slate-800">J ลูกแม็กขาคู่ BOX/5000PCS
+                        </h4>
+                        <p id="modal-spec" class="text-[11px] text-red-600 font-bold mt-1">รหัสสินค้า: --</p>
+                    </div>
+                    <div class="text-right">
+                        <span id="modal-qty" class="text-xs font-bold text-slate-800 block">1 กล่อง</span>
+                        <span id="modal-price" class="text-[10px] text-slate-400 font-light">ราคา -- บาท</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-white border-t border-slate-100">
+                <a id="line-share-btn" href="https://line.me" target="_blank"
+                    class="flex items-center justify-center gap-2 bg-[#06C755] text-white rounded-xl py-3 text-xs font-bold hover:brightness-105 transition-all shadow-md w-full text-center">
+                    <i class="fa-brands fa-line text-base"></i> ตกลงการสั่งซื้อสินค้าผ่าน LINE
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <main
+        class="w-full max-w-6xl bg-gradient-to-b from-[#fdfcf9] to-[#f9f6ee] rounded-[2.5rem] shadow-2xl border-2 border-[#e3d7b9] p-6 md:p-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-start relative z-10">
+
+        <div class="md:col-span-5 w-full md:sticky md:top-6 space-y-4">
+            <div
+                class="flex flex-col justify-center items-center bg-gradient-to-br from-[#f5edd6] via-[#ede3c5] to-[#dfd3b0] rounded-[2rem] p-6 border border-[#dfd2ad] aspect-square w-full relative overflow-hidden shadow-inner">
+                <span
+                    class="absolute top-4 right-4 bg-[#1e2d4a] text-[#fcfbf7] text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-md">แท้
+                    100%</span>
+                <img src="image/ลูกแมกซ์ขาคู่.jpg" alt="J ลูกแม็กขาคู่ TIPWONG"
+                    class="max-h-64 object-contain drop-shadow-[0_10px_20px_rgba(30,45,74,0.15)] transition-transform duration-500 hover:scale-105"
+                    onerror="this.src='https://placehold.co/400x400?text=J+Staples+5000PCS'">
+            </div>
+
+            <a href="https://line.me" target="_blank"
+                class="flex items-center justify-center gap-2 bg-[#06C755] text-white rounded-2xl py-3.5 text-xs font-bold hover:brightness-105 transition-all shadow-md w-full text-center">
+                <i class="fa-brands fa-line text-base"></i> สอบถามราคาส่งยกลังพิเศษผ่าน LINE
+            </a>
+            <div class="bg-[#1e2d4a] text-white p-6 rounded-2xl shadow-sm space-y-6">
+                <div class="space-y-3">
+                    <strong class="text-[#b49352] flex items-center gap-3 text-base font-bold">
+                        <i class="fa-solid fa-screwdriver-wrench"></i> การใช้งาน (Application)
+                    </strong>
+                    <p class="leading-relaxed pl-8 text-slate-100 text-sm">
+                        ลูกแม็กซ์ขาคู่ ออกแบบมาสำหรับงานยิงยึดวัสดุประเภทไม้ โครงไม้ กรอบรูป โซฟา เบาะรถยนต์
+                        งานเบาะเก้าอี้ งานเฟอร์นิเจอร์ งานตกแต่งภายใน และงานประกอบโครงสร้างไม้ทั่วไป
+                        มีความเหนียวและแข็งแรงทนทาน ยิงจมลึก ยึดเกาะชิ้นงานได้แน่นหนา ไม่หลุดง่าย
+                    </p>
+                </div>
+
+                <div class="space-y-3">
+                    <strong class="text-[#b49352] flex items-center gap-3 text-base font-bold">
+                        <i class="fa-solid fa-star"></i> จุดเด่นและคุณสมบัติ
+                    </strong>
+                    <p class="pl-8 text-slate-200 font-medium text-xs mb-2">ผลิตจากลวดเหล็กคุณภาพสูง
+                        ผ่านกระบวนการชุบแข็งและป้องกันสนิม</p>
+                    <ul class="list-disc pl-12 text-slate-100 space-y-3 text-sm">
+                        <li>ลวดมีความคมและแข็งแรงพิเศษ ปลายขาตรง ไม่บิดงอง่ายขณะยิง</li>
+                        <li>ยิงได้ลื่น ไหลลื่น ไม่ติดเครื่องแม็กซ์ลมหรือปืนยิงแม็กซ์ไฟฟ้า</li>
+                        <li>เคลือบสารกันสนิม ช่วยยืดอายุการใช้งานยาวนาน ไม่เกิดคราบสนิมติดชิ้นงาน</li>
+                        <li>มีหลากหลายขนาด รองรับการใช้งานที่หลากหลาย ตอบโจทย์ทุกประเภทงานช่าง</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="md:col-span-7 space-y-6">
+            <div class="space-y-2">
+                <div class="flex flex-wrap items-center gap-2">
+                    <span
+                        class="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-gradient-to-r from-[#9e2a2a] to-[#701515] px-3.5 py-1 rounded-full shadow-sm">
+                        <i class="fa-solid fa-industry"></i> TIPWONG INDUSTRIAL
+                    </span>
+                    <span
+                        class="inline-flex items-center gap-1 text-xs font-bold text-emerald-800 bg-emerald-100/80 border border-emerald-300 px-2.5 py-0.5 rounded-full">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> มีสินค้าพร้อมส่ง
+                    </span>
+                </div>
+                <h1 class="text-2xl md:text-3xl font-extrabold text-[#1e2d4a] tracking-tight leading-tight">
+                    ลูกแม็กขาคู่ (บรรจุ 5,000 ตัว/กล่อง)<br>
+                    <span
+                        class="text-base md:text-lg font-bold bg-gradient-to-r from-[#1e2d4a] via-[#b49352] to-[#1e2d4a] bg-clip-text text-transparent">ลูกแม็กขาคู่คุณภาพสูง
+                        ยิงงานไม้ เบาะหนัง ไม้อัด และงานเฟอร์นิเจอร์ทั่วไป</span>
+                </h1>
+            </div>
+
+            <div
+                class="bg-gradient-to-r from-[#1e2d4a] to-[#2a3e63] text-white p-4 rounded-2xl shadow-md border border-[#2e3f5e] space-y-2">
+                <h3 class="text-xs font-bold text-[#b49352] flex items-center gap-2">
+                    <i class="fa-solid fa-screwdriver-wrench"></i> รายละเอียดสินค้า (Description)
+                </h3>
+                <p class="text-xs text-slate-200 leading-relaxed font-light">
+                    ลูกแม็กขาคู่ ซีรีส์ คุณภาพพรีเมียมจากแบรนด์ TIPWONG INDUSTRIAL
+                    ผลิตจากเส้นลวดเหล็กชุบสังกะสีกันสนิมอย่างดี ลวดแข็งแรง ยิงง่าย ไม่โก่งงอ ไม่ติดขัดในตัวปืนลม
+                    เหมาะสำหรับงานประกอบเฟอร์นิเจอร์ ยิงโครงไม้ ยิงเบาะรถยนต์ เบาะมอเตอร์ไซค์ งานฝ้าเพดาน
+                    และงานตกแต่งภายในทั่วไป
+                </p>
+            </div>
+
+            <div class="space-y-6">
+                <!-- ตารางราคาปลีก -->
+                <div class="border border-blue-200 rounded-2xl overflow-hidden shadow-md bg-[#fdfcf9]">
+                    <div
+                        class="bg-gradient-to-r from-blue-700 to-blue-900 text-white px-4 py-3 text-xs font-bold flex items-center gap-1.5">
+                        <i class="fa-solid fa-store text-blue-300"></i>
+                        <span>ตารางราคาปลีก: J ลูกแม็กขาคู่ BOX/5000PCS (ราคาขายปลีกทั่วไป)</span>
+                    </div>
+                    <div class="overflow-x-auto p-3 custom-scroll">
+                        <table class="w-full text-center border-separate border-spacing-1 min-w-[620px] text-xs">
+                            <thead>
+                                <tr class="text-blue-900 font-bold bg-blue-50 text-[11px]">
+                                    <th class="p-2.5 text-left bg-blue-800 text-white rounded-xl shadow-sm">รหัสสินค้า
+                                    </th>
+                                    <th class="p-2 border border-blue-100 rounded-xl bg-white shadow-sm">สถานะในคลัง
+                                    </th>
+                                    <th class="p-2 border border-blue-100 rounded-xl bg-white shadow-sm">
+                                        รายละเอียดความยาว</th>
+                                    <th class="p-2 border border-blue-100 rounded-xl bg-white shadow-sm">ตัว / กล่อง
+                                    </th>
+                                    <th class="p-2 border border-blue-100 rounded-xl bg-white shadow-sm">กล่อง / ลัง
+                                    </th>
+                                    <th class="p-2 border border-blue-100 rounded-xl bg-white shadow-sm">ราคาต่อกล่อง
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-2 font-bold text-slate-700 bg-slate-100 rounded-xl text-left">J1006
+                                    </td>
+                                    <td
+                                        class="p-2 bg-white border border-slate-200 rounded-xl font-semibold text-emerald-600">
+                                        มีสินค้า</td>
+                                    <td
+                                        class="p-2 bg-white border border-slate-200 rounded-xl text-slate-600 font-medium">
+                                        6mm.</td>
+                                    <td class="p-2 bg-white border border-slate-200 rounded-xl text-slate-500">5,000 ตัว
+                                        / กล่อง</td>
+                                    <td class="p-2 bg-white border border-slate-200 rounded-xl text-slate-500">30 กล่อง
+                                    </td>
+                                    <td
+                                        class="p-2 bg-white border border-slate-200 rounded-xl font-extrabold text-red-600 text-sm">
+                                        90.00 บาท</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-2 font-bold text-slate-700 bg-slate-100 rounded-xl text-left">J1008
+                                    </td>
+                                    <td
+                                        class="p-2 bg-white border border-slate-200 rounded-xl font-semibold text-emerald-600">
+                                        มีสินค้า</td>
+                                    <td
+                                        class="p-2 bg-white border border-slate-200 rounded-xl text-slate-600 font-medium">
+                                        8mm.</td>
+                                    <td class="p-2 bg-white border border-slate-200 rounded-xl text-slate-500">5,000 ตัว
+                                        / กล่อง</td>
+                                    <td class="p-2 bg-white border border-slate-200 rounded-xl text-slate-500">30 กล่อง
+                                    </td>
+                                    <td
+                                        class="p-2 bg-white border border-slate-200 rounded-xl font-extrabold text-red-600 text-sm">
+                                        100.00 บาท</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-2 font-bold text-slate-700 bg-slate-100 rounded-xl text-left">J1010
+                                    </td>
+                                    <td
+                                        class="p-2 bg-white border border-slate-200 rounded-xl font-semibold text-emerald-600">
+                                        มีสินค้า</td>
+                                    <td
+                                        class="p-2 bg-white border border-slate-200 rounded-xl text-slate-600 font-medium">
+                                        10mm.</td>
+                                    <td class="p-2 bg-white border border-slate-200 rounded-xl text-slate-500">5,000 ตัว
+                                        / กล่อง</td>
+                                    <td class="p-2 bg-white border border-slate-200 rounded-xl text-slate-500">30 กล่อง
+                                    </td>
+                                    <td
+                                        class="p-2 bg-white border border-slate-200 rounded-xl font-extrabold text-red-600 text-sm">
+                                        110.00 บาท</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-2 font-bold text-slate-700 bg-slate-100 rounded-xl text-left">J1013
+                                    </td>
+                                    <td
+                                        class="p-2 bg-white border border-slate-200 rounded-xl font-semibold text-amber-600">
+                                        สินค้าใกล้หมด</td>
+                                    <td
+                                        class="p-2 bg-white border border-slate-200 rounded-xl text-slate-600 font-medium">
+                                        13mm.</td>
+                                    <td class="p-2 bg-white border border-slate-200 rounded-xl text-slate-500">5,000 ตัว
+                                        / กล่อง</td>
+                                    <td class="p-2 bg-white border border-slate-200 rounded-xl text-slate-500">30 กล่อง
+                                    </td>
+                                    <td
+                                        class="p-2 bg-white border border-slate-200 rounded-xl font-extrabold text-red-600 text-sm">
+                                        120.00 บาท</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-2 font-bold text-slate-700 bg-slate-100 rounded-xl text-left">J1016
+                                    </td>
+                                    <td
+                                        class="p-2 bg-white border border-slate-200 rounded-xl font-semibold text-rose-600">
+                                        สินค้าหมด</td>
+                                    <td
+                                        class="p-2 bg-white border border-slate-200 rounded-xl text-slate-600 font-medium">
+                                        16mm.</td>
+                                    <td class="p-2 bg-white border border-slate-200 rounded-xl text-slate-500">5,000 ตัว
+                                        / กล่อง</td>
+                                    <td class="p-2 bg-white border border-slate-200 rounded-xl text-slate-500">20 กล่อง
+                                    </td>
+                                    <td
+                                        class="p-2 bg-white border border-slate-200 rounded-xl font-extrabold text-red-600 text-sm">
+                                        130.00 บาท</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="bg-gradient-to-b from-[#ede6d0] to-[#e4dac0] border border-[#d3c6a4] p-5 rounded-2xl space-y-4 shadow-inner">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-700 mb-1.5">เลือกสเปกขนาดสินค้า</label>
+                        <select id="product-size-select"
+                            class="w-full bg-[#fdfcf9] border border-[#c5b896] rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-700 focus:outline-none focus:border-[#1e2d4a] transition-colors">
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-700 mb-1.5">ระบุจำนวน (กล่อง)</label>
+                        <div
+                            class="flex items-center bg-[#fdfcf9] border border-[#c5b896] rounded-xl overflow-hidden h-[38px]">
+                            <button type="button" onclick="stepQty(-1)"
+                                class="px-3 h-full text-slate-500 hover:bg-slate-100 font-bold text-xs transition-colors">-</button>
+                            <input id="product-qty-input" type="number" value="1" min="1"
+                                class="w-full h-full bg-[#fdfcf9] text-center text-xs font-bold text-slate-700 focus:outline-none">
+                            <button type="button" onclick="stepQty(1)"
+                                class="px-3 h-full text-slate-500 hover:bg-slate-100 font-bold text-xs transition-colors">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ส่วนแสดงข้อมูลรายละเอียดเงื่อนไข: ราคาปลีก -->
+                <div id="retail-info-box"
+                    class="bg-white/70 border border-[#d3c6a4] rounded-xl p-3 text-xs text-slate-700 space-y-1.5 transition-all">
+                    <div class="font-bold text-[#1e2d4a] flex items-center gap-1.5">
+                        <i class="fa-solid fa-circle-info text-amber-600"></i> กำลังเลือก: ราคาปลีกทั่วไป (Retail Price)
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-[11px]">
+                        <div class="bg-white p-2 rounded-lg border border-slate-200">
+                            <span class="block text-slate-400 font-semibold">กลุ่มเป้าหมาย</span>
+                            <span class="font-bold text-slate-800">ลูกค้าทั่วไป, ซ่อมแซมบ้านเล็กๆ น้อยๆ</span>
+                        </div>
+                        <div class="bg-white p-2 rounded-lg border border-slate-200">
+                            <span class="block text-slate-400 font-semibold">จำนวนการซื้อ</span>
+                            <span class="font-bold text-slate-800">ซื้อปลีกตามความต้องการ</span>
+                        </div>
+                        <div class="bg-white p-2 rounded-lg border border-slate-200">
+                            <span class="block text-slate-400 font-semibold">ระดับราคา</span>
+                            <span class="font-bold text-slate-800">ราคามาตรฐานทั่วไป</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4">
+                    <button onclick="addToCartAndRedirect()"
+                        style="background: linear-gradient(to right, #6b0c11, #400508, #240002);"
+                        class="w-full hover:brightness-125 text-white font-black py-4 px-2 rounded-full shadow-lg shadow-red-950/30 text-[11px] sm:text-xs flex items-center justify-center gap-2 duration-100 cursor-pointer uppercase tracking-wider whitespace-nowrap">
+                        <i class="fa-solid fa-cart-plus text-xs shrink-0"></i> เพิ่มสินค้าลงตะกร้า & ดำเนินการต่อ
+                    </button>
+                </div>
+            </div>
+
+            <script>
+                // ชุดข้อมูลสินค้าซีรีส์ J (ลูกแม็กขาคู่) - เหลือเฉพาะราคาปลีก
+                const priceDatabase = {
+                    retail: {
+                        header: "ตารางรายการสินค้า: J ลูกแม็กขาคู่ BOX/5000PCS (ราคาขายปลีกทั่วไป)",
+                        label: "ราคาปลีก",
+                        items: [
+                            { id: 'J1006', detail: '6mm.', qty: '5,000 ตัว / กล่อง', pack: '30 กล่อง' },
+                            { id: 'J1008', detail: '8mm.', qty: '5,000 ตัว / กล่อง', pack: '30 กล่อง' },
+                            { id: 'J1010', detail: '10mm.', qty: '5,000 ตัว / กล่อง', pack: '30 กล่อง' },
+                            { id: 'J1013', detail: '13mm.', qty: '5,000 ตัว / กล่อง', pack: '30 กล่อง' },
+                            { id: 'J1016', detail: '16mm.', qty: '5,000 ตัว / กล่อง', pack: '20 กล่อง' }
+                        ]
+                    }
+                };
+
+                // ฟังก์ชันโหลดข้อมูลราคาปลีกเข้า Dropdown ทันที
+                function initRetailTable() {
+                    const selectedData = priceDatabase['retail'];
+                    if (!selectedData) return;
+
+                    const sizeSelect = document.getElementById('product-size-select');
+                    if (!sizeSelect) return;
+
+                    let htmlOptions = '';
+                    selectedData.items.forEach(item => {
+                        htmlOptions += `<option value="${selectedData.label}|${item.id} (${item.detail})">${item.id} (${item.detail}) - บรรจุ ${item.qty}</option>`;
+                    });
+
+                    sizeSelect.innerHTML = htmlOptions;
+                }
+
+                // ฟังก์ชันเพิ่ม-ลดจำนวนสินค้า
+                function stepQty(amount) {
+                    const qtyInput = document.getElementById('product-qty-input');
+                    if (!qtyInput) return;
+                    let currentVal = parseInt(qtyInput.value) || 1;
+                    currentVal += amount;
+                    if (currentVal < 1) currentVal = 1;
+                    qtyInput.value = currentVal;
+                }
+
+                // จัดการการส่งคำสั่งซื้อและเรียกใช้ Modal ใบเสนอราคา
+                function addToCartAndRedirect() {
+                    const sizeSelect = document.getElementById('product-size-select');
+                    const qtyInput = document.getElementById('product-qty-input');
+                    if (!sizeSelect || !qtyInput) return;
+
+                    const [priceType, sizeName] = sizeSelect.value.split('|');
+                    const selectedQty = parseInt(qtyInput.value) || 1;
+
+                    const fullProductName = `J ลูกแม็กขาคู่ (${priceType})`;
+
+                    const modalProdName = document.getElementById('modal-product-name');
+                    if (modalProdName) modalProdName.innerText = fullProductName;
+
+                    const modalSpec = document.getElementById('modal-spec');
+                    if (modalSpec) modalSpec.innerText = `รหัสสินค้า/ขนาด: ${sizeName} • บรรจุ 5,000 ตัว/กล่อง`;
+
+                    const modalQty = document.getElementById('modal-qty');
+                    if (modalQty) modalQty.innerText = `${selectedQty} กล่อง`;
+
+                    const modalPrice = document.getElementById('modal-price');
+                    if (modalPrice) modalPrice.innerText = `ราคาประเมิน: สอบถามเพิ่มเติม`;
+
+                    const messageText = encodeURIComponent(`สวัสดีครับ สนใจสั่งซื้อสินค้า:\n- สินค้า: ${fullProductName}\n- รหัสสินค้า/ขนาด: ${sizeName}\n- จำนวนที่ระบุ: ${selectedQty} กล่อง`);
+                    const lineBtn = document.getElementById('line-share-btn');
+                    if (lineBtn) lineBtn.href = `https://line.me/R/msg/text/?${messageText}`;
+
+                    const modal = document.getElementById('quotation-modal');
+                    if (modal) {
+                        modal.classList.remove('opacity-0', 'pointer-events-none');
+                        const innerDiv = modal.querySelector('div');
+                        if (innerDiv) innerDiv.classList.remove('scale-95');
+                    }
+
+                    const toastDetails = document.getElementById('toast-item-details');
+                    if (toastDetails) toastDetails.innerText = `เพิ่มสำเร็จ! ${sizeName} จำนวน ${selectedQty} กล่อง เข้าสู่ระบบเรียบร้อย`;
+
+                    const toast = document.getElementById('toast-notification');
+                    if (toast) {
+                        toast.classList.remove('opacity-0', '-translate-y-24', 'pointer-events-none');
+                        setTimeout(closeToast, 4000);
+                    }
+                }
+
+                function closeModal() {
+                    const modal = document.getElementById('quotation-modal');
+                    if (modal) {
+                        modal.classList.add('opacity-0', 'pointer-events-none');
+                        const innerDiv = modal.querySelector('div');
+                        if (innerDiv) innerDiv.classList.add('scale-95');
+                    }
+                }
+
+                function closeToast() {
+                    const toast = document.getElementById('toast-notification');
+                    if (toast) {
+                        toast.classList.add('opacity-0', '-translate-y-24', 'pointer-events-none');
+                    }
+                }
+
+                window.onload = function () {
+                    initRetailTable();
+                };
+            </script>
